@@ -32,5 +32,20 @@ app.get("/api/operations/:id",auth,async(req,res)=>{
  const t=await r.text();let d;try{d=JSON.parse(t)}catch{d={raw:t.slice(0,1500)}}res.status(r.status).json(d);
  }catch(e){res.status(500).json({error:"Could not check operation."})}
 });
+app.get("/api/roblox/universes/:id",auth,async(req,res)=>{
+ try{
+  const universeId=String(req.params.id||"").trim();
+  const key=String(req.headers["x-roblox-api-key"]||"").trim();
+  if(!/^\\d{1,25}$/.test(universeId))return res.status(400).json({error:"Invalid Universe ID."});
+  if(!key)return res.status(400).json({error:"Enter your Roblox Open Cloud API key."});
+  const upstream=await fetch("https://apis.roblox.com/cloud/v2/universes/"+encodeURIComponent(universeId),{
+   method:"GET",headers:{"x-api-key":key}
+  });
+  const raw=await upstream.text();let data;
+  try{data=JSON.parse(raw)}catch{data={message:raw.slice(0,1200)}}
+  if(!upstream.ok)return res.status(upstream.status).json({error:data.message||data.error||"Roblox rejected the lookup.",details:data});
+  res.json(data);
+ }catch(e){console.error("Universe lookup failed:",e.message);res.status(500).json({error:"Could not contact Roblox Open Cloud."});}
+});
 app.get("/health",(_,res)=>res.json({ok:true,service:"rblx-publisher"}));
 app.listen(PORT,()=>console.log("RBLX Publisher listening on "+PORT));
