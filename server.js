@@ -47,5 +47,6 @@ app.get("/api/roblox/universes/:id",auth,async(req,res)=>{
   res.json(data);
  }catch(e){console.error("Universe lookup failed:",e.message);res.status(500).json({error:"Could not contact Roblox Open Cloud."});}
 });
+require("./createExperience")(app,auth);
 app.get("/health",(_,res)=>res.json({ok:true,service:"rblx-publisher"}));
 app.listen(PORT,()=>console.log("RBLX Publisher listening on "+PORT));
