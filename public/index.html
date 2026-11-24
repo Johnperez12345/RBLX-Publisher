@@ -23,39 +23,86 @@
   <div class="hero">
     <div class="heroCopy"><div class="eyebrow">CREATOR TOOLKIT <span class="liveDot"></span> READY TO PUBLISH</div>
       <h1>Publish with<br><em>confidence.</em></h1>
-      <p>A straightforward workspace for sending your Roblox place files through Open Cloud.</p>
+      <p>Publish Roblox place files and animations from one simple workspace.</p>
     </div>
     <div class="heroMark" aria-hidden="true"><div class="heroMarkInner">R</div><span>OPEN<br>CLOUD</span></div>
   </div>
-  <div class="stats">
-    <div class="stat"><div class="statIcon">⌁</div><div><small>DESTINATION PLACE</small><b id="placeStat">Not set</b></div></div>
-    <div class="stat"><div class="statIcon">◷</div><div><small>PUBLISHING STATUS</small><b id="statusStat">Ready</b></div></div>
-  </div>
-  <div class="sectionHeading"><div><div class="eyebrow">WORKSPACE</div><h2>Publish a place</h2></div><span class="secureTag"><span></span> PRIVATE SESSION</span></div>
-  <div class="dashboardGrid">
-    <section class="panel connectionPanel">
-      <div class="sectionHead"><div class="stepNo">01</div><div class="sectionTitle"><h3>Connection</h3><p>Use your own Roblox credentials.</p></div><span class="pill">DEVICE KEY</span></div>
-      <label>Roblox Open Cloud API key<input id="apiKey" type="password" autocomplete="off" spellcheck="false" placeholder="Paste your Roblox API key"></label>
-      <div class="keyActions"><p id="keyNote" class="hint">Your key is saved in this browser on this device only. It is sent with upload and status requests, not stored on our server.</p><button id="clearKeyBtn" type="button" class="quiet">Forget key</button></div>
-      <label>Roblox Place ID<input id="placeId" inputmode="numeric" autocomplete="off" placeholder="Enter your own Place ID" required></label>
-      <p class="hint">Enter the Place ID for your own experience. No Place ID is pre-filled.</p>
-    </section>
-    <section class="panel uploadPanel">
-      <div class="sectionHead"><div class="stepNo">02</div><div class="sectionTitle"><h3>Place file</h3><p>Select the file you want to publish.</p></div></div>
-      <label class="drop" for="placeFile"><div class="uploadIcon">↑</div><b>Choose a place file</b><span>Tap to browse · .rbxl or .rbxlx</span><input id="placeFile" type="file" accept=".rbxl,.rbxlx"></label>
-      <div id="fileInfo" class="fileInfo hidden"></div>
-      <div class="warning"><b>Before you publish</b><br>This replaces the current published place. Back up your experience and only upload files you own or have permission to use.</div>
-      <button id="publishBtn" class="primary full" disabled>Publish place <span>→</span></button>
-      <p id="uploadMessage" class="message" aria-live="polite"></p>
-    </section>
-    <section class="panel verifyPanel">
-      <div class="sectionHead"><div class="stepNo">03</div><div class="sectionTitle"><h3>Verify upload</h3><p>Check the result returned by Roblox.</p></div></div>
-      <label>Operation ID<input id="operationId" placeholder="Appears after upload"></label>
-      <button id="checkBtn" class="secondary full">Check publishing status</button>
-      <pre id="result" class="result">No operation checked yet.</pre>
-    </section>
-  </div>
+  <nav class="tabNav" aria-label="Publisher sections">
+    <button class="tabButton active" data-tab="placeTab" type="button">Publish Place</button>
+    <button class="tabButton" data-tab="animationTab" type="button">Publish Animation</button>
+    <button class="tabButton" data-tab="guideTab" type="button">How to Get Key</button>
+  </nav>
+  <section id="placeTab" class="tabPanel">
+    <div class="stats">
+      <div class="stat"><div class="statIcon">⌁</div><div><small>DESTINATION PLACE</small><b id="placeStat">Not set</b></div></div>
+      <div class="stat"><div class="statIcon">◷</div><div><small>PUBLISHING STATUS</small><b id="statusStat">Ready</b></div></div>
+    </div>
+    <div class="sectionHeading"><div><div class="eyebrow">WORKSPACE</div><h2>Publish a place</h2></div><span class="secureTag"><span></span> PRIVATE SESSION</span></div>
+    <div class="dashboardGrid">
+      <section class="panel connectionPanel">
+        <div class="sectionHead"><div class="stepNo">01</div><div class="sectionTitle"><h3>Connection</h3><p>Use your own Roblox credentials.</p></div><span class="pill">DEVICE KEY</span></div>
+        <label>Roblox Open Cloud API key<input id="apiKey" type="password" autocomplete="off" spellcheck="false" placeholder="Paste your Roblox API key"></label>
+        <div class="keyActions"><p id="keyNote" class="hint">Your key is saved in this browser on this device only. It is sent with upload and status requests, not stored on our server.</p><button id="clearKeyBtn" type="button" class="quiet">Forget key</button></div>
+        <label>Roblox Place ID<input id="placeId" inputmode="numeric" autocomplete="off" placeholder="Enter your own Place ID" required></label>
+        <p class="hint">Enter the Place ID for your own experience. No Place ID is pre-filled.</p>
+      </section>
+      <section class="panel uploadPanel">
+        <div class="sectionHead"><div class="stepNo">02</div><div class="sectionTitle"><h3>Place file</h3><p>Select the file you want to publish.</p></div></div>
+        <label class="drop" for="placeFile"><div class="uploadIcon">↑</div><b>Choose a place file</b><span>Tap to browse · .rbxl or .rbxlx</span><input id="placeFile" type="file" accept=".rbxl,.rbxlx"></label>
+        <div id="fileInfo" class="fileInfo hidden"></div>
+        <div class="warning"><b>Before you publish</b><br>This replaces the current published place. Back up your experience and only upload files you own or have permission to use.</div>
+        <button id="publishBtn" class="primary full" disabled>Publish place <span>→</span></button>
+        <p id="uploadMessage" class="message" aria-live="polite"></p>
+      </section>
+      <section class="panel verifyPanel">
+        <div class="sectionHead"><div class="stepNo">03</div><div class="sectionTitle"><h3>Verify upload</h3><p>Check the result returned by Roblox.</p></div></div>
+        <label>Operation ID<input id="operationId" placeholder="Appears after upload"></label>
+        <button id="checkBtn" class="secondary full">Check publishing status</button>
+        <pre id="result" class="result">No operation checked yet.</pre>
+      </section>
+    </div>
+  </section>
+  <section id="animationTab" class="tabPanel hidden">
+    <div class="sectionHeading"><div><div class="eyebrow">ANIMATION TOOL</div><h2>Publish an animation</h2></div><span class="secureTag">WORKER SERVICE</span></div>
+    <div class="dashboardGrid animationGrid">
+      <section class="panel connectionPanel">
+        <div class="sectionHead"><div class="stepNo">01</div><div class="sectionTitle"><h3>Animation details</h3><p>Identify the owner and animation.</p></div></div>
+        <label>Roblox User ID<input id="animUserId" inputmode="numeric" autocomplete="off" placeholder="Your Roblox User ID"></label>
+        <label>Animation name<input id="animName" maxlength="100" placeholder="My animation"></label>
+        <label>Description<input id="animDescription" maxlength="1000" placeholder="Describe your animation"></label>
+        <label>Roblox Open Cloud API key<input id="animApiKey" type="password" autocomplete="off" spellcheck="false" placeholder="Paste your API key"></label>
+        <p class="hint">The API key is sent to the YuzkPub Worker to process the animation. It is not saved by this page.</p>
+      </section>
+      <section class="panel uploadPanel">
+        <div class="sectionHead"><div class="stepNo">02</div><div class="sectionTitle"><h3>Animation JSON</h3><p>Upload a JSON file or paste its contents.</p></div></div>
+        <label class="drop" for="animJsonFile"><div class="uploadIcon">↑</div><b>Choose animation JSON</b><span>Tap to browse · .json</span><input id="animJsonFile" type="file" accept=".json,application/json"></label>
+        <div id="animFileInfo" class="fileInfo hidden"></div>
+        <label>Or paste JSON<textarea id="animJson" rows="8" placeholder='Paste animation JSON here…'></textarea></label>
+        <div class="warning"><b>Before publishing</b><br>Use animation JSON in the format supported by the YuzkPub animation service. Publish only animations you own or have permission to use.</div>
+        <button id="animPublishBtn" class="primary full">Publish animation <span>→</span></button>
+        <p id="animMessage" class="message" aria-live="polite"></p>
+      </section>
+      <section class="panel verifyPanel">
+        <div class="sectionHead"><div class="stepNo">03</div><div class="sectionTitle"><h3>Publish result</h3><p>Your Animation ID appears here.</p></div></div>
+        <pre id="animResult" class="result">No animation submitted yet.</pre>
+        <button id="copyAnimId" class="secondary full" type="button" disabled>Copy Animation ID</button>
+      </section>
+    </div>
+  </section>
+  <section id="guideTab" class="tabPanel hidden">
+    <div class="sectionHeading"><div><div class="eyebrow">SETUP GUIDE</div><h2>How to get your API key</h2></div></div>
+    <div class="panel guidePanel">
+      <ol class="guideSteps">
+        <li><b>Open Roblox Creator Dashboard</b><p>Go to <a href="https://create.roblox.com/" target="_blank" rel="noopener">create.roblox.com</a> and sign in to your Roblox account.</p></li>
+        <li><b>Open Open Cloud</b><p>Find the Open Cloud section in Creator Dashboard, then open API Keys.</p></li>
+        <li><b>Create a new API key</b><p>Give the key a recognizable name and choose only the permissions needed for the task you intend to perform.</p></li>
+        <li><b>Set the correct experience and permissions</b><p>Choose the relevant experience/resources and the asset or place permissions required by Roblox. The available scopes depend on the publishing feature.</p></li>
+        <li><b>Copy and keep it private</b><p>Copy the key once and paste it into the relevant publisher field. Never share it in chat, screenshots, or public code.</p></li>
+      </ol>
+      <div class="warning"><b>Security note</b><br>The Animation Publisher sends the key to the external YuzkPub Worker at <code>yuzkpub-api.galiasnathaniel5.workers.dev</code>. Use a dedicated key with the minimum required permissions. Revoke it in Creator Dashboard if you no longer trust or need that Worker.</div>
+      <a class="guideLink" href="https://create.roblox.com/" target="_blank" rel="noopener">Open Creator Dashboard ↗</a>
+    </div>
+  </section>
   <footer><span>RBLX Publisher</span><span>Not affiliated with Roblox Corporation.</span></footer>
-</section>
-</main></div><script src="/app.js"></script>
+</section></main></div><script src="/app.js"></script>
 </body></html>
