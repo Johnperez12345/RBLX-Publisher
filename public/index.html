@@ -29,6 +29,7 @@
   <form id="loginForm">
     <label>Dashboard password<input id="password" type="password" autocomplete="current-password" required placeholder="Dashboard password"></label>
     <button class="primary full">Log in <span>→</span></button><p id="loginError" class="error"></p>
+    <div class="visitCounter" aria-live="polite"><span class="eyebrow">TOTAL WEBSITE VISITS</span><div class="counterapi" key="homepage" style="min-height:32px">Loading visits…</div></div>
   </form>
 </section>
 <section id="appView" class="hidden">
@@ -184,5 +185,6 @@
     </div>
   </section>
   <footer><span>RBLX Publisher</span><span>Not affiliated with Roblox Corporation.</span></footer>
-</section></main></div><script src="/app.js"></script><script src="/create-experience.js"></script>
+</section></main></div><script async src="https://counterapi.com/c.js?ns=rblx-publisher.onrender.com"></script>
+<script src="/app.js"></script><script src="/create-experience.js"></script>
 </body></html>
