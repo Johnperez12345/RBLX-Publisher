@@ -13,8 +13,9 @@
       <button id="menuToggle" class="menuToggle hidden" type="button" aria-expanded="false" aria-controls="publisherMenu"><span class="menuGlyph">☰</span> Menu</button>
       <nav id="publisherMenu" class="publisherMenu hidden" aria-label="Publisher menu">
         <button class="tabButton active" data-tab="placeTab" type="button"><span>01</span> Publish Place</button>
-        <button class="tabButton" data-tab="animationTab" type="button"><span>02</span> Publish Animation</button>
-        <button class="tabButton" data-tab="guideTab" type="button"><span>03</span> How to Get Key</button>
+        <button class="tabButton" data-tab="creatorTab" type="button"><span>02</span> Create Experience</button>
+        <button class="tabButton" data-tab="animationTab" type="button"><span>03</span> Publish Animation</button>
+        <button class="tabButton" data-tab="guideTab" type="button"><span>04</span> How to Get Key</button>
         <div class="menuDivider"></div>
         <button id="logoutBtn" class="menuLogout hidden" type="button"><span>↪</span> Log out</button>
       </nav>
@@ -65,6 +66,27 @@
         <label>Operation ID<input id="operationId" placeholder="Appears after upload"></label>
         <button id="checkBtn" class="secondary full">Check publishing status</button>
         <pre id="result" class="result">No operation checked yet.</pre>
+      </section>
+    </div>
+  </section>
+  <section id="creatorTab" class="tabPanel hidden">
+    <div class="sectionHeading"><div><div class="eyebrow">MOBILE CREATION ASSISTANT</div><h2>Create an experience</h2></div><span class="secureTag">NO COOKIE STORAGE</span></div>
+    <div class="dashboardGrid creatorGrid">
+      <section class="panel connectionPanel">
+        <div class="sectionHead"><div class="stepNo">01</div><div class="sectionTitle"><h3>Experience details</h3><p>Prepare the details for your new Roblox experience.</p></div></div>
+        <label>Experience name<input id="newExperienceName" maxlength="50" placeholder="My New Experience"></label>
+        <label>Description<textarea id="newExperienceDescription" rows="5" maxlength="1000" placeholder="Describe your game..."></textarea></label>
+        <label>Starting template<select id="experienceTemplate"><option value="Baseplate">Baseplate</option><option value="Village">Village</option><option value="Obby">Obby</option><option value="Racing">Racing</option><option value="Tycoon">Tycoon</option></select></label>
+        <label>How many experiences?<input id="experienceCount" type="number" min="1" max="10" value="1" inputmode="numeric"></label>
+        <button id="prepareExperiencesBtn" class="primary full" type="button">Prepare creation list <span>→</span></button>
+        <p id="creatorMessage" class="message" aria-live="polite">This assistant prepares your batch details. Roblox must confirm each actual creation.</p>
+      </section>
+      <section class="panel uploadPanel">
+        <div class="sectionHead"><div class="stepNo">02</div><div class="sectionTitle"><h3>Creation checklist</h3><p>Review and copy your experience details.</p></div></div>
+        <pre id="experienceBatchResult" class="result">No creation list prepared yet.</pre>
+        <button id="copyExperienceBatchBtn" class="secondary full" type="button" disabled>Copy creation list</button>
+        <a class="guideLink creatorDashboardLink" href="https://create.roblox.com/dashboard/creations" target="_blank" rel="noopener noreferrer">Open Roblox Creator Dashboard ↗</a>
+        <div class="warning"><b>Important</b><br>This does not automatically create experiences. Roblox does not provide a documented public Open Cloud endpoint for creating a new universe. Do not paste your .ROBLOSECURITY cookie here; it grants access to your account.</div>
       </section>
     </div>
   </section>
