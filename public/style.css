@@ -205,3 +205,81 @@ footer span:first-child{color:#b3c4d8}
  .narrow{padding:22px}
  footer{font-size:8px}
 }
+
+
+/* PIXEL EDITION — crisp 8-bit dashboard */
+:root{
+ --bg:#080d18;--surface:#101a2a;--surface2:#17253a;--line:#3a5272;--lineSoft:#24364f;
+ --text:#edf4ff;--muted:#9cacc3;--blue:#9fc7f4;--blueDeep:#416c9c;--blueSoft:#1d3552;
+ --pixel-shadow:4px 4px 0 rgba(0,0,0,.38)
+}
+*{border-radius:0!important}
+body{
+ font-family:"Courier New",ui-monospace,monospace;
+ background-color:#080d18;
+ background-image:linear-gradient(rgba(107,145,190,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(107,145,190,.045) 1px,transparent 1px),radial-gradient(ellipse at 50% 0%,#1b2d48 0,transparent 55%);
+ background-size:16px 16px,16px 16px,auto;
+ image-rendering:pixelated
+}
+.shell{max-width:1160px}
+.topbar{border-bottom:2px solid #263b57;padding-bottom:12px}
+.logo{border:2px solid #7998bd;background:#294565;box-shadow:3px 3px 0 #050a12;font-family:"Courier New",monospace}
+.brand b,.brand small,.eyebrow,.stat small,.secureTag,.pill,.stepNo{font-family:"Courier New",monospace}
+.brand b{letter-spacing:1px;text-transform:uppercase}
+.hero{border:2px solid #496687;background:linear-gradient(135deg,#1b304b,#101d30);box-shadow:6px 6px 0 #050a12}
+.hero:before,.hero:after{display:none}
+.heroMark{border:2px solid #6687ac;background:#172b45;box-shadow:4px 4px 0 #050a12;transform:none}
+.heroMarkInner{border:2px solid #86a8ce;background:#345a83;box-shadow:3px 3px 0 #0a1422;font-family:"Courier New",monospace}
+h1{font-family:"Courier New",monospace;font-weight:900;letter-spacing:-2px;text-transform:uppercase}
+h1 em{color:#b9d8fa}
+.eyebrow{letter-spacing:1.2px}
+.panel,.stat,.narrow,.publisherMenu,.drop,.result,.warning,.fileInfo,.guideSteps li{
+ border:2px solid var(--line);box-shadow:4px 4px 0 #050a12;background:#101b2c
+}
+.panel:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 #050a12;border-color:#789bc3}
+.stat{background:#101b2c}
+.statIcon,.stepNo,.pill,.guideSteps li:before,.publisherMenu .tabButton span{
+ border:2px solid #496789;background:#1d3552;color:#c5def8;box-shadow:2px 2px 0 #070d17
+}
+.sectionHeading h2,.sectionTitle h3,.guideSteps b{font-family:"Courier New",monospace;text-transform:uppercase;letter-spacing:.4px}
+input,.animationGrid textarea{
+ border:2px solid #3c5879;background:#080f1c;color:#f1f6ff;
+ font-family:"Courier New",monospace;box-shadow:inset 2px 2px 0 #030811
+}
+input:focus,.animationGrid textarea:focus{border-color:#a3c9f2;box-shadow:0 0 0 2px #6d96c533,inset 2px 2px 0 #030811}
+.drop{border:2px dashed #6b8db3;background:#0d1929;box-shadow:inset 0 0 0 3px #14263c}
+.drop:hover{border-color:#b1d2f6;background:#142943;transform:none}
+.uploadIcon{border:2px solid #6c8fb6;background:#1c3654;box-shadow:3px 3px 0 #050a12}
+.primary,.secondary,.quiet,.menuToggle,.menuLogout,.tabButton,.guideLink{
+ font-family:"Courier New",monospace;font-weight:900;text-transform:uppercase;letter-spacing:.35px;
+ border:2px solid #6b8fb7;box-shadow:3px 3px 0 #050a12
+}
+.primary{background:#416b98;color:#fff}
+.primary:hover:not(:disabled){background:#527fae;transform:translate(-1px,-1px);box-shadow:4px 4px 0 #050a12}
+.secondary{background:#1d3856;border-color:#54769b}
+.quiet{background:#172b43;border-color:#405e80}
+.menuToggle{background:#203b5b;border-color:#7799be}
+.publisherMenu{background:#101b2c;border:2px solid #6888ad;box-shadow:5px 5px 0 #050a12}
+.publisherMenu .tabButton{border:2px solid transparent;box-shadow:none}
+.publisherMenu .tabButton.active{border-color:#688bb2;background:#203b5b}
+.menuDivider{height:2px;background:#344b68;margin:4px 5px}
+.menuLogout{display:flex;align-items:center;gap:12px;width:100%;padding:12px;text-align:left;background:#33242a;border-color:#86535d;color:#ffd9df;cursor:pointer}
+.menuLogout span{font-size:17px;color:#ffb7c1}
+.menuLogout:hover{background:#493039}
+.warning{background:#29261e;border-color:#6d5c3b;color:#e2d2b4}
+.result{background:#080f1b;color:#c5d8ed;box-shadow:inset 3px 3px 0 #030811}
+.guideSteps li{background:#0d1929}
+.guideSteps li:before{border:2px solid #55769a}
+.guideLink{background:#1c3857;border-color:#6387ae;text-decoration:none}
+.animationOpenLink{border:2px solid #6b8fb7;background:#1c3857;box-shadow:3px 3px 0 #050a12;font-family:"Courier New",monospace;text-transform:uppercase}
+footer{border-top:2px solid #263b57;font-family:"Courier New",monospace}
+.narrow{background:#101b2c}
+.narrow h1{font-size:clamp(30px,6vw,42px)}
+@media(max-width:700px){
+ .hero{padding:22px 18px;min-height:190px}
+ .heroMark{width:78px;height:78px}
+ .heroMarkInner{width:38px;height:38px}
+ .dashboardGrid{gap:14px}
+ .panel{padding:17px}
+ .menuToggle{padding:10px 12px}
+}
