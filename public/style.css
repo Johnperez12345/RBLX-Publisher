@@ -296,3 +296,30 @@ footer{border-top:2px solid #263b57;font-family:"Courier New",monospace}
 .creatorGrid select:focus{outline:2px solid #a3c9f2;outline-offset:2px}
 .creatorDashboardLink{display:block;text-align:center;margin-top:12px}
 @media(max-width:700px){.creatorGrid{grid-template-columns:1fr}.creatorGrid .connectionPanel,.creatorGrid .uploadPanel{grid-column:1}}
+
+/* Pixel-art EZ Publish inspired creation console */
+.ezConsole{max-width:780px;border-radius:2px;background:#101c2c;border:2px solid #405a77;box-shadow:6px 6px 0 #050a12;padding:16px}
+.ezTabs{display:grid;grid-template-columns:1fr 1fr .65fr;gap:5px;padding:5px;background:#091321;border:1px solid #30445c;margin-bottom:17px}
+.ezTab{min-height:42px;border:1px solid #30445c;border-radius:0;background:#14243a;color:#9fb5ce;font:700 10px/1.3 "Courier New",monospace;letter-spacing:.4px;padding:8px 5px}
+.ezTab.active{background:#31577e;border-color:#91b5db;color:#fff;box-shadow:inset 0 0 0 1px #b9d5f1}
+.ezFormPanel label{font:700 10px "Courier New",monospace;letter-spacing:.5px;color:#c9d8e8}
+.ezFormPanel input,.ezFormPanel textarea{border-radius:0;background:#081321;border:1px solid #405a77;font:12px "Courier New",monospace}
+.ezFormPanel textarea{display:block;width:100%;resize:vertical;margin-top:8px;padding:12px;color:var(--text);outline:none}
+.ezFormPanel textarea:focus{border-color:#a9c6e8}
+.ezTwoCol{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ezTiny{float:right;color:#7f9bb9;font-size:8px}
+.cookieActions{display:flex;justify-content:flex-end;gap:7px;margin-top:-5px}
+.cookieActions .quiet,.ezLogHeader .quiet{border-radius:0;font:700 9px "Courier New",monospace}
+.ezStatus{display:flex;align-items:center;gap:12px;padding:13px;background:#091523;border:1px solid #354c66;margin:17px 0}
+.ezStatusLamp{width:11px;height:11px;background:#9bb98f;border:2px solid #d5e8c9;box-shadow:0 0 0 3px #9bb98f24}
+.ezStatus b,.ezStatus small{display:block;font-family:"Courier New",monospace}
+.ezStatus b{font-size:11px;color:#d7e8fa}.ezStatus small{font-size:9px;color:#91a5bb;margin-top:4px}
+.ezActions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.ezActions button{border-radius:0;min-height:44px;font:700 11px "Courier New",monospace;letter-spacing:.4px}
+.ezActions .primary{background:#315d88;border:2px solid #91b5db;box-shadow:3px 3px 0 #050a12}
+.ezActions .secondary{background:#17283d;border:1px solid #536a83}
+.ezLogHeader{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font:700 10px "Courier New",monospace;color:#c8d9ea}
+.ezLog{min-height:170px;white-space:pre-wrap;overflow-wrap:anywhere;background:#07111d;border:1px solid #30445c;border-radius:0;padding:13px;color:#a9c6e8;font:11px/1.65 "Courier New",monospace}
+.ezConsole .warning{border-radius:0;font:10px/1.6 "Courier New",monospace}
+.ezConsole .guideLink{font:700 10px "Courier New",monospace}
+@media(max-width:520px){.ezConsole{padding:11px}.ezTabs{grid-template-columns:1fr 1fr .7fr}.ezTab{font-size:8px;min-height:40px}.ezTwoCol{grid-template-columns:1fr;gap:0}.ezTiny{float:none;display:block;margin-top:5px}.ezActions{grid-template-columns:1fr 1fr}}
