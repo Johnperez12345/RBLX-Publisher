@@ -52,3 +52,30 @@ $("animPublishBtn").onclick=async()=>{
 function showAnimationSuccess(assetId){const cleanId=String(assetId).replace(/^rbxassetid:\/\//,"");const uri="rbxassetid://"+cleanId;const link="https://create.roblox.com/store/asset/"+encodeURIComponent(cleanId);lastAnimationId=cleanId;$("animResult").textContent="Published successfully!\n\nAnimation ID: "+cleanId+"\nRoblox asset: "+uri+"\n\nOpen this link to view the animation:\n"+link;const openLink=$("animOpenLink");openLink.href=link;openLink.classList.remove("hidden");$("animMessage").textContent="Roblox animation publishing completed. Your animation link is ready.";$("copyAnimId").disabled=false;$("copyAnimLink").disabled=false}
 $("copyAnimId").onclick=async()=>{if(!lastAnimationId)return;const value="rbxassetid://"+lastAnimationId;try{await navigator.clipboard.writeText(value);$("animMessage").textContent="Animation ID copied."}catch{$("animMessage").textContent="Copy failed. Select and copy the ID from the result."}};
 $("copyAnimLink").onclick=async()=>{if(!lastAnimationId)return;const link="https://create.roblox.com/store/asset/"+encodeURIComponent(lastAnimationId);try{await navigator.clipboard.writeText(link);$("animMessage").textContent="Animation link copied."}catch{$("animMessage").textContent="Copy failed. Open the link above and copy it from your browser."}};
+
+/* Mobile Experience Creator assistant: prepares details locally; it does not call undocumented Roblox endpoints. */
+let experienceBatchText="";
+$("prepareExperiencesBtn").onclick=()=>{
+ const name=$("newExperienceName").value.trim();
+ const description=$("newExperienceDescription").value.trim();
+ const template=$("experienceTemplate").value;
+ const count=Number($("experienceCount").value);
+ if(!name){$("creatorMessage").textContent="Enter an experience name.";return}
+ if(!Number.isInteger(count)||count<1||count>10){$("creatorMessage").textContent="Choose a quantity from 1 to 10.";return}
+ const entries=Array.from({length:count},(_,i)=>({
+  number:i+1,
+  name:count===1?name:`${name} ${i+1}`,
+  description,
+  template,
+  status:"Not created — awaiting Roblox Creator Dashboard confirmation"
+ }));
+ experienceBatchText=entries.map(x=>[`Experience ${x.number}`,`Name: ${x.name}`,`Description: ${x.description||"(none)"}`,`Template: ${x.template}`,`Status: ${x.status}`].join("\\n")).join("\\n\\n");
+ $("experienceBatchResult").textContent=experienceBatchText;
+ $("copyExperienceBatchBtn").disabled=false;
+ $("creatorMessage").textContent=`Prepared ${count} experience detail(s). Open Creator Dashboard to create them; no experience has been created by this page.`;
+};
+$("copyExperienceBatchBtn").onclick=async()=>{
+ if(!experienceBatchText)return;
+ try{await navigator.clipboard.writeText(experienceBatchText);$("creatorMessage").textContent="Creation list copied. Paste the details into Roblox Creator Dashboard."}
+ catch{$("creatorMessage").textContent="Copy unavailable. Select the text in the creation list and copy it."}
+};
