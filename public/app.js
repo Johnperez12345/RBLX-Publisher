@@ -2,7 +2,7 @@ const $=id=>document.getElementById(id);let file=null,animJsonFile=null,lastAnim
 const KEY_STORAGE="rblxPublisher.robloxApiKey.v1";
 const ANIMATION_WORKER="https://yuzkpub-api.galiasnathaniel5.workers.dev";
 async function api(url,opt={}){const r=await fetch(url,{credentials:"same-origin",...opt});const d=await r.json().catch(()=>({error:"Invalid response"}));if(!r.ok)throw Error(d.error||`Request failed ${r.status}`);return d}
-function view(on){$("loginView").classList.toggle("hidden",on);$("appView").classList.toggle("hidden",!on);$("logoutBtn").classList.toggle("hidden",!on)}
+function view(on){$("loginView").classList.toggle("hidden",on);$("appView").classList.toggle("hidden",!on);$("menuToggle").classList.toggle("hidden",!on);$("logoutBtn").classList.toggle("hidden",!on);if(!on){$("publisherMenu").classList.add("hidden");$("menuToggle").setAttribute("aria-expanded","false")}}
 function loadLocalKey(){try{$("apiKey").value=localStorage.getItem(KEY_STORAGE)||""}catch{$("keyNote").textContent="Browser storage is unavailable. The key will stay only until you close this page."}}
 function saveLocalKey(){try{const key=$("apiKey").value;if(key)localStorage.setItem(KEY_STORAGE,key);else localStorage.removeItem(KEY_STORAGE);$("keyNote").textContent="Saved only in this browser on this device. It is not stored on our server."}catch{$("keyNote").textContent="Could not save in browser storage. The key may be lost when you close this page."}}
 loadLocalKey();async function init(){try{view((await api("/api/session")).authenticated)}catch{view(false)}}init();
