@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RBLX Experience Creator — Preview</title>
+<style>
+:root{--red:#e04444;--ink:#252525;--muted:#777;--line:#e6e6e6;--bg:#f5f5f5;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 Arial,Helvetica,sans-serif}
+.wrap{max-width:760px;margin:34px auto;padding:0 16px}.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.brand{font-weight:800;font-size:18px}.tag{font-size:11px;color:#777;border:1px solid var(--line);border-radius:20px;padding:5px 9px;background:#fff}
+.panel{background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:0 2px 8px #00000008;overflow:hidden}
+.tabs{display:flex;border-bottom:1px solid var(--line);background:#fff}.tab{border:0;background:none;padding:15px 19px;color:#666;font-weight:700;cursor:pointer;border-bottom:3px solid transparent}.tab.active{color:var(--red);border-bottom-color:var(--red)}
+.content{padding:24px}.section{display:none}.section.active{display:block}h1{font-size:20px;margin:0 0 5px} .sub{color:var(--muted);margin:0 0 22px}
+label{display:block;font-weight:700;margin:15px 0 7px}input,select{width:100%;height:42px;border:1px solid #d8d8d8;border-radius:5px;padding:0 12px;font:inherit;background:white;color:#333}input:focus,select:focus{outline:2px solid #f5caca;border-color:var(--red)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.hint{font-size:12px;color:#888;margin-top:6px}.actions{display:flex;gap:9px;margin-top:22px}.btn{border:0;border-radius:5px;padding:11px 17px;font-weight:700;cursor:pointer}.primary{background:var(--red);color:#fff}.secondary{background:#eee;color:#444}.btn:disabled{opacity:.45;cursor:not-allowed}
+.status{display:flex;align-items:center;gap:8px;margin-top:20px;color:#777;font-size:12px}.dot{width:8px;height:8px;border-radius:50%;background:#d49a38}.progress{height:7px;border-radius:20px;background:#eee;margin-top:10px;overflow:hidden}.bar{height:100%;width:0;background:var(--red);transition:width .2s}
+.log{background:#202124;color:#e8e8e8;border-radius:6px;padding:14px;min-height:170px;max-height:260px;overflow:auto;font:12px/1.7 monospace;white-space:pre-wrap}.notice{background:#fff8e9;border:1px solid #f0dfb7;color:#765b25;border-radius:6px;padding:12px;margin-top:16px;font-size:12px}.foot{color:#999;text-align:center;font-size:11px;margin:15px}
+@media(max-width:560px){.wrap{margin:16px auto}.content{padding:18px}.tab{padding:13px 12px;font-size:12px}.grid{grid-template-columns:1fr}.top{align-items:flex-start}}
+</style></head>
+<body><main class="wrap">
+<div class="top"><div class="brand">RBLX Experience Creator</div><span class="tag">PRIVATE PREVIEW · NOT LIVE</span></div>
+<div class="panel"><nav class="tabs">
+<button class="tab active" data-tab="universe">Create Universe</button><button class="tab" data-tab="place">Create Place</button><button class="tab" data-tab="logs">Log</button>
+</nav><div class="content">
+<section id="universe" class="section active"><h1>Create Universe</h1><p class="sub">Prepare a new Roblox experience.</p>
+<label for="universeTemplate">Template Place ID</label><input id="universeTemplate" inputmode="numeric" value="95206881"><div class="hint">Template used as the starting point.</div>
+<div class="grid"><div><label for="universeAmount">Quantity</label><input id="universeAmount" type="number" min="1" max="10" value="1"></div><div><label for="universeDelay">Delay (seconds)</label><input id="universeDelay" type="number" min="1" max="60" value="3"></div></div>
+<div class="actions"><button class="btn primary" disabled>Create Universe</button><button class="btn secondary" disabled>Stop</button></div>
+<div class="status"><span class="dot"></span><span>Backend locked — creation is not enabled</span></div><div class="progress"><div class="bar"></div></div>
+<div class="notice">Preview only. Roblox Universe creation is not enabled because the required creation endpoint is not confirmed as a supported, stable Open Cloud operation. No credentials are requested or transmitted.</div></section>
+<section id="place" class="section"><h1>Create Place</h1><p class="sub">Prepare a place under an existing Universe.</p>
+<label for="universeId">Universe ID</label><input id="universeId" inputmode="numeric" placeholder="Enter your Universe ID">
+<label for="placeTemplate">Template Place ID</label><input id="placeTemplate" inputmode="numeric" value="95206881">
+<div class="grid"><div><label for="placeAmount">Quantity</label><input id="placeAmount" type="number" min="1" max="10" value="1"></div><div><label for="placeDelay">Delay (seconds)</label><input id="placeDelay" type="number" min="1" max="60" value="3"></div></div>
+<div class="actions"><button class="btn primary" disabled>Create Place</button><button class="btn secondary" disabled>Stop</button></div>
+<div class="status"><span class="dot"></span><span>Backend locked — creation is not enabled</span></div>
+<div class="notice">No Roblox cookie or API key is collected in this preview. Place creation will only be enabled after endpoint and authentication verification.</div></section>
+<section id="logs" class="section"><h1>Activity Log</h1><p class="sub">Local preview events only.</p><div class="log" id="log">[READY] Experience Creator preview loaded.
+[LOCKED] Roblox creation requests are disabled.
+[SAFE] No credentials collected or sent.</div></section>
+</div></div><div class="foot">RBLX Experience Creator · Preview build · Does not modify your live Publisher</div>
+</main><script>
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.section').forEach(x=>x.classList.toggle('active',x.id===b.dataset.tab));}));
+</script></body></html>
