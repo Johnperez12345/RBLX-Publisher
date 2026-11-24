@@ -60,3 +60,16 @@ footer{display:flex;justify-content:space-between;gap:12px;color:#718197;font-si
 
 .animationOpenLink{display:block;margin:12px 0;padding:13px 14px;border:1px solid #526f91;border-radius:10px;background:#1b3048;color:#d9e9fa;text-align:center;text-decoration:none;font-size:12px;font-weight:800}
 .animationOpenLink:active{background:#29435f}
+
+/* Compact dropdown menu for publisher sections */
+.topActions{display:flex;align-items:center;gap:10px}
+.menuWrap{position:relative;z-index:20}
+.menuToggle{display:inline-flex;align-items:center;gap:9px;padding:10px 14px;border:1px solid #405873;border-radius:11px;background:#1b2d42;color:#e5edf7;font-size:12px;font-weight:800;cursor:pointer}
+.menuToggle:active{background:#29415d}
+.menuGlyph{font-size:15px;color:#b9cde2}
+.publisherMenu{position:absolute;right:0;top:calc(100% + 10px);width:min(255px,calc(100vw - 32px));padding:7px;background:#142337;border:1px solid #3a506a;border-radius:14px;box-shadow:0 18px 48px #0008;display:grid;gap:5px}
+.publisherMenu .tabButton{display:flex;align-items:center;gap:12px;width:100%;min-width:0;text-align:left;flex:none;padding:13px 12px;border-radius:9px;font-size:12px}
+.publisherMenu .tabButton span{display:grid;place-items:center;width:25px;height:25px;border-radius:8px;background:#1c3048;color:#9fb8d4;font-size:9px;letter-spacing:.4px}
+.publisherMenu .tabButton.active{background:#263e59;border-color:#496481;color:#f0f5fb}
+.publisherMenu .tabButton.active span{background:#385675;color:#fff}
+@media(max-width:700px){.topbar{margin-bottom:28px}.menuToggle{padding:9px 12px}.publisherMenu{right:0}}
