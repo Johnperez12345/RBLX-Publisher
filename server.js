@@ -13,12 +13,12 @@ app.get("/api/session",(req,res)=>res.json({authenticated:!!req.session.authenti
 app.post("/api/upload",auth,upload.single("placeFile"),async(req,res)=>{
  try{const key=String(req.headers["x-roblox-api-key"]||""),place=String(req.body.placeId||"").trim(),f=req.file;
  if(!key)return res.status(400).json({error:"Enter your Roblox API key."});
- if(!/^\\d{5,25}$/.test(place))return res.status(400).json({error:"Invalid Place ID."});
+ if(!/^\d{5,25}$/.test(place))return res.status(400).json({error:"Invalid Place ID."});
  if(!f)return res.status(400).json({error:"Choose a place file."});
  const ext=path.extname(f.originalname).toLowerCase();if(![".rbxl",".rbxlx"].includes(ext))return res.status(400).json({error:"Only .rbxl and .rbxlx are supported."});
- const boundary="----RblxPublisher"+crypto.randomBytes(12).toString("hex"),type=ext===".rbxlx"?"application/xml":"application/octet-stream",safeName=f.originalname.replace(/["\\r\\n]/g,"_");
- const head=Buffer.from(`--${boundary}\\r\\nContent-Disposition: form-data; name="request"\\r\\nContent-Type: application/json\\r\\n\\r\\n${JSON.stringify({assetId:Number(place),assetType:"Place",published:true})}\\r\\n--${boundary}\\r\\nContent-Disposition: form-data; name="fileContent"; filename="${safeName}"\\r\\nContent-Type: ${type}\\r\\n\\r\\n`);
- const tail=Buffer.from(`\\r\\n--${boundary}--\\r\\n`),body=Buffer.concat([head,f.buffer,tail]);
+ const boundary="----RblxPublisher"+crypto.randomBytes(12).toString("hex"),type=ext===".rbxlx"?"application/xml":"application/octet-stream",safeName=f.originalname.replace(/["\r\n]/g,"_");
+ const head=Buffer.from(`--${boundary}\r\nContent-Disposition: form-data; name="request"\r\nContent-Type: application/json\r\n\r\n${JSON.stringify({assetId:Number(place),assetType:"Place",published:true})}\r\n--${boundary}\r\nContent-Disposition: form-data; name="fileContent"; filename="${safeName}"\r\nContent-Type: ${type}\r\n\r\n`);
+ const tail=Buffer.from(`\r\n--${boundary}--\r\n`),body=Buffer.concat([head,f.buffer,tail]);
  const upstream=await fetch(`https://apis.roblox.com/assets/v1/assets/${place}`,{method:"PATCH",headers:{"x-api-key":key,"Content-Type":`multipart/form-data; boundary=${boundary}`,"Content-Length":String(body.length)},body});
  const raw=await upstream.text();let data;try{data=JSON.parse(raw)}catch{data={raw:raw.slice(0,1500)}}
  if(!upstream.ok)return res.status(upstream.status).json({error:data.message||data.error||"Roblox rejected upload.",details:data});
