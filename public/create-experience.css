@@ -1,18 +1,25 @@
 /* Create Experience sub-tab only. Scoped to #ezCreatePanel so other tabs are untouched. */
-.ezCreatePanel label{display:block;font:700 10px "Courier New",monospace;letter-spacing:.5px;color:#c9d8e8;margin:15px 0}
-.ezCreatePanel label small{color:#8ea3ba;font-weight:400}
-.ezCreatePanel input:not([type=checkbox]),.ezCreatePanel textarea{display:block;width:100%;margin-top:8px;border-radius:0;background:#081321;border:1px solid #405a77;font:12px "Courier New",monospace;color:var(--text);padding:12px;outline:none}
+.ezcPx{image-rendering:pixelated;width:16px;height:16px;flex:none;vertical-align:-3px}
+.ezcIntro{display:flex;gap:10px;align-items:flex-start;background:#0d1a2a;border:1px solid #30445c;padding:10px 12px;margin-bottom:6px}
+.ezcIntro .ezcPx{width:22px;height:22px;margin-top:1px}
+.ezcIntro p{margin:0}
+.ezcField{margin:15px 0}
+.ezCreatePanel label{display:flex;align-items:center;gap:7px;font:700 10px "Courier New",monospace;letter-spacing:.5px;color:#c9d8e8;margin:0 0 8px}
+.ezCreatePanel label small{color:#8ea3ba;font-weight:400;letter-spacing:0}
+.ezCreatePanel input:not([type=checkbox]),.ezCreatePanel textarea{display:block;width:100%;border-radius:0;background:#081321;border:1px solid #405a77;font:12px "Courier New",monospace;color:var(--text);padding:12px;outline:none;box-shadow:inset 2px 2px 0 #040a13}
 .ezCreatePanel textarea{resize:vertical}
 .ezCreatePanel input:focus,.ezCreatePanel textarea:focus{border-color:#a9c6e8}
-.ezCreatePanel .ezcCheck{display:flex;align-items:center;gap:10px;cursor:pointer}
-.ezCreatePanel .ezcCheck input{appearance:none;-webkit-appearance:none;width:22px;height:22px;flex:none;margin:0;padding:0;border:1px solid #405a77;background:#081321;border-radius:0;display:block;position:relative}
-.ezCreatePanel .ezcCheck input:checked::after{content:"";position:absolute;inset:4px;background:#91b5db}
-.ezCreatePanel .ezcCheck span{font:700 10px "Courier New",monospace}
-.ezcStats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:14px 0 8px}
-.ezcStats>div{background:#091321;border:1px solid #30445c;padding:9px 8px;min-width:0}
-.ezcStats small{display:block;font:700 8px/1.3 "Courier New",monospace;color:#8ea3ba;letter-spacing:.3px}
+.ezCreatePanel .ezcCheck{display:flex;align-items:center;gap:10px;cursor:pointer;margin:16px 0 4px}
+.ezCreatePanel .ezcCheck input{appearance:none;-webkit-appearance:none;width:20px;height:20px;flex:none;margin:0;padding:0;border:1px solid #405a77;background:#081321;border-radius:0;display:block;position:relative;box-shadow:inset 2px 2px 0 #040a13}
+.ezCreatePanel .ezcCheck input:checked::after{content:"";position:absolute;inset:3px;background:#91b5db}
+.ezCreatePanel .ezcCheck span{font:700 10px "Courier New",monospace;letter-spacing:.3px}
+.ezcStats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:16px 0 8px}
+.ezcStats>div{background:#091321;border:1px solid #30445c;padding:10px 8px;min-width:0;text-align:center}
+.ezcStats .ezcPx{width:18px;height:18px}
+.ezcStats small{display:block;font:700 8px/1.3 "Courier New",monospace;color:#8ea3ba;letter-spacing:.3px;margin-top:5px}
 .ezcStats b{display:block;margin-top:6px;font:700 18px "Courier New",monospace;color:#cfe0f2}
-.ezcStats input{margin-top:6px!important;padding:6px!important;text-align:center;font-size:14px!important}
+.ezcStats input{margin-top:6px!important;padding:6px!important;text-align:center;font-size:14px!important;box-shadow:none!important}
 .ezcLinks{display:flex;flex-direction:column;gap:8px;margin-top:12px}
-.ezcLinks a{display:block;text-align:center;text-decoration:none;color:#dbe9f7;background:#17283d;border:1px solid #536a83;padding:11px;font:700 11px "Courier New",monospace}
+.ezcLinks a{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;color:#dbe9f7;background:#17283d;border:1px solid #536a83;padding:11px;font:700 11px "Courier New",monospace;box-shadow:2px 2px 0 #050a12}
+.ezCreatePanel .ezActions button{display:flex;align-items:center;justify-content:center;gap:8px}
 @media (max-width:520px){.ezcStats{grid-template-columns:1fr 1fr}.ezcStats>div:last-child{grid-column:1 / -1}}

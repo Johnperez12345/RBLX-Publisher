@@ -86,22 +86,51 @@
         <pre id="experienceDetails" class="ezLog">Experience details will appear here after a successful lookup.</pre>
       </div>
       <div id="ezCreatePanel" class="ezCreatePanel hidden">
-        <p class="hint">Gumawa ng bagong Baseplate experience. Gumagamit ito ng hindi opisyal na paraan na nangangailangan ng cookie. <b>Test account lang ang gamitin.</b> Hindi ito sine-save at hindi ginagamit ang API key sa tab na ito.</p>
-        <label>.ROBLOSECURITY COOKIE (TEST ACCOUNT)<input id="ezcCookie" type="password" autocomplete="off" spellcheck="false" placeholder="_|WARNING:-DO-NOT-SHARE..."></label>
-        <label>TEMPLATE PLACE ID <small>(95206881 = BASEPLATE)</small><input id="ezcTemplate" inputmode="numeric" autocomplete="off" value="95206881"></label>
-        <label>EXPERIENCE NAME <small>(MAX 50)</small><input id="ezcName" maxlength="50" autocomplete="off" placeholder="My New Game"></label>
-        <label>DESCRIPTION <small>(MAX 1000)</small><textarea id="ezcDesc" maxlength="1000" rows="3" placeholder="Maikling paglalarawan"></textarea></label>
-        <label class="ezcCheck"><input id="ezcPublic" type="checkbox"><span>I-set na Public pagkatapos gumawa</span></label>
-        <p class="hint">Maaaring hindi payagan ng Roblox ang Public sa bago o hindi verified na account.</p>
-        <div class="ezcStats">
-          <div><small>NASA ACCOUNT</small><b id="ezcOwned">?</b></div>
-          <div><small>NAGAWA NGAYONG ARAW</small><b id="ezcToday">0</b></div>
-          <div><small>DAILY LIMIT KO</small><input id="ezcCap" inputmode="numeric" value="3"></div>
+        <div class="ezcIntro">
+          <svg class="ezcPx" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><rect x="3" y="0" width="2" height="1" fill="#e2c88a"/><rect x="2" y="1" width="4" height="1" fill="#e2c88a"/><rect x="2" y="2" width="4" height="2" fill="#d7b982"/><rect x="3" y="2" width="2" height="2" fill="#f3dfae"/><rect x="2" y="4" width="1" height="4" fill="#9c8450"/><rect x="3" y="4" width="2" height="1" fill="#7a673f"/><rect x="2" y="6" width="2" height="1" fill="#7a673f"/></svg>
+          <p class="hint">Spin up a new Baseplate experience. This uses an unofficial method that needs an account cookie. <b>Test account only.</b> The cookie is never saved, and the API key from other tabs is not used here.</p>
         </div>
-        <p class="hint">Walang opisyal na limit na alam ko. Ang daily limit ay sarili mong pangontrol at naka-save lang sa browser na ito. May hiwalay ding limit ang server.</p>
-        <div class="ezActions"><button id="ezcCheckBtn" class="secondary" type="button">CHECK ACCOUNT</button><button id="ezcCreateBtn" class="primary" type="button">CREATE EXPERIENCE</button></div>
-        <p id="ezcMessage" class="message" aria-live="polite">Wala pang request.</p>
-        <pre id="ezcOutput" class="ezLog">Lalabas dito ang result.</pre>
+
+        <div class="ezcField">
+          <label for="ezcCookie"><svg class="ezcPx" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="3" width="4" height="2" fill="#8eafd2"/><rect x="1" y="2" width="2" height="1" fill="#8eafd2"/><rect x="1" y="5" width="2" height="1" fill="#8eafd2"/><rect x="4" y="3" width="1" height="2" fill="#5f7e9e"/><rect x="5" y="2" width="3" height="4" fill="#c9d8e8"/><rect x="6" y="3" width="1" height="1" fill="#17283d"/></svg> ACCOUNT COOKIE <small>(TEST ACCOUNT ONLY)</small></label>
+          <input id="ezcCookie" type="password" autocomplete="off" spellcheck="false" placeholder="_|WARNING:-DO-NOT-SHARE...">
+        </div>
+
+        <div class="ezcField">
+          <label for="ezcTemplate"><svg class="ezcPx" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="0" width="8" height="8" fill="#7da7d8"/><rect x="1" y="1" width="6" height="6" fill="#17283d"/><rect x="2" y="4" width="4" height="3" fill="#c9d8e8"/><rect x="3" y="1" width="2" height="2" fill="#c9d8e8"/></svg> TEMPLATE PLACE ID <small>(95206881 = BASEPLATE)</small></label>
+          <input id="ezcTemplate" inputmode="numeric" autocomplete="off" value="95206881">
+        </div>
+
+        <div class="ezcField">
+          <label for="ezcName"><svg class="ezcPx" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="3" width="1" height="2" fill="#91b5db"/><rect x="1" y="2" width="1" height="4" fill="#91b5db"/><rect x="2" y="1" width="5" height="6" fill="#4d7aa8"/><rect x="3" y="2" width="3" height="4" fill="#17283d"/><rect x="4" y="3" width="1" height="2" fill="#dbe9f7"/></svg> EXPERIENCE NAME <small>(MAX 50)</small></label>
+          <input id="ezcName" maxlength="50" autocomplete="off" placeholder="My New Game">
+        </div>
+
+        <div class="ezcField">
+          <label for="ezcDesc"><svg class="ezcPx" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="0" width="5" height="8" fill="#dbe9f7"/><rect x="2" y="2" width="3" height="1" fill="#4d7aa8"/><rect x="2" y="4" width="3" height="1" fill="#4d7aa8"/><rect x="2" y="6" width="2" height="1" fill="#4d7aa8"/></svg> DESCRIPTION <small>(MAX 1000)</small></label>
+          <textarea id="ezcDesc" maxlength="1000" rows="3" placeholder="A short description of the game"></textarea>
+        </div>
+
+        <label class="ezcCheck" for="ezcPublic">
+          <input id="ezcPublic" type="checkbox">
+          <svg class="ezcPx" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><circle cx="4" cy="4" r="4" fill="#91b5db"/><rect x="0" y="3" width="8" height="2" fill="#4d7aa8"/><rect x="3" y="0" width="2" height="8" fill="#4d7aa8"/></svg>
+          <span>Set to Public right after creating</span>
+        </label>
+        <p class="hint">Roblox may refuse to make a new or unverified account's experience public.</p>
+
+        <div class="ezcStats">
+          <div><svg class="ezcPx" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="2" width="6" height="5" fill="#315d88"/><rect x="1" y="1" width="6" height="1" fill="#91b5db"/><rect x="2" y="4" width="1" height="1" fill="#c9d8e8"/><rect x="4" y="4" width="1" height="1" fill="#c9d8e8"/><rect x="2" y="6" width="3" height="1" fill="#c9d8e8"/></svg><small>EXPERIENCES OWNED</small><b id="ezcOwned">?</b></div>
+          <div><svg class="ezcPx" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="1" width="6" height="6" fill="#2a3a52"/><rect x="2" y="2" width="4" height="4" fill="#8da98e"/><rect x="3" y="0" width="2" height="2" fill="#8da98e"/></svg><small>CREATED TODAY</small><b id="ezcToday">0</b></div>
+          <div><svg class="ezcPx" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><rect x="3" y="0" width="2" height="6" fill="#d7b982"/><rect x="1" y="5" width="6" height="1" fill="#9c8450"/><rect x="0" y="6" width="8" height="2" fill="#7a673f"/></svg><small>MY DAILY LIMIT</small><input id="ezcCap" inputmode="numeric" value="3"></div>
+        </div>
+        <p class="hint">There is no known official Roblox limit. This cap is your own safety control, saved only in this browser. The server also applies its own separate limit.</p>
+
+        <div class="ezActions">
+          <button id="ezcCheckBtn" class="secondary" type="button"><svg class="ezcPx" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="1" width="4" height="4" fill="none" stroke="#9fb5ce"/><rect x="1" y="1" width="4" height="1" fill="#9fb5ce"/><rect x="1" y="4" width="4" height="1" fill="#9fb5ce"/><rect x="1" y="1" width="1" height="4" fill="#9fb5ce"/><rect x="4" y="1" width="1" height="4" fill="#9fb5ce"/><rect x="5" y="5" width="3" height="1" fill="#9fb5ce"/><rect x="6" y="6" width="2" height="1" fill="#9fb5ce"/></svg> CHECK ACCOUNT</button>
+          <button id="ezcCreateBtn" class="primary" type="button"><svg class="ezcPx" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="4" width="2" height="3" fill="#fff"/><rect x="2" y="3" width="1" height="1" fill="#fff"/><rect x="3" y="1" width="4" height="3" fill="#fff"/><rect x="4" y="0" width="2" height="1" fill="#fff"/></svg> CREATE EXPERIENCE</button>
+        </div>
+        <p id="ezcMessage" class="message" aria-live="polite">No request sent yet.</p>
+        <pre id="ezcOutput" class="ezLog">Results will appear here.</pre>
       </div>
       <div id="ezLogPanel" class="hidden">
         <div class="ezLogHeader"><b>ACTIVITY LOG</b><button id="clearExperienceLog" class="quiet" type="button">CLEAR LOG</button></div>
