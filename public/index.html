@@ -70,28 +70,41 @@
     </div>
   </section>
   <section id="creatorTab" class="tabPanel hidden">
-    <div class="sectionHeading"><div><div class="eyebrow">MOBILE CREATION ASSISTANT</div><h2>Create an experience</h2></div><span class="secureTag">NO COOKIE STORAGE</span></div>
-    <div class="dashboardGrid creatorGrid">
-      <section class="panel connectionPanel">
-        <div class="sectionHead"><div class="stepNo">01</div><div class="sectionTitle"><h3>Experience details</h3><p>Prepare the details for your new Roblox experience.</p></div></div>
-        <label>ROBLOSECURITY cookie (local-only demo field)<input id="experienceCookie" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Cookie field — not connected"></label>
-        <div class="cookieActions"><button id="toggleExperienceCookie" class="quiet" type="button">Show cookie</button><button id="clearExperienceCookie" class="quiet" type="button">Clear</button></div>
-        <p class="hint">This field stays in page memory only and is cleared on reload or logout. It is never saved or sent anywhere, and it is NOT used to create experiences.</p>
-        <label>Experience name<input id="newExperienceName" maxlength="50" placeholder="My New Experience"></label>
-        <label>Description<textarea id="newExperienceDescription" rows="5" maxlength="1000" placeholder="Describe your game..."></textarea></label>
-        <label>Starting template<select id="experienceTemplate"><option value="Baseplate">Baseplate</option><option value="Village">Village</option><option value="Obby">Obby</option><option value="Racing">Racing</option><option value="Tycoon">Tycoon</option></select></label>
-        <label>How many experiences?<input id="experienceCount" type="number" min="1" max="10" value="1" inputmode="numeric"></label>
-        <button id="prepareExperiencesBtn" class="primary full" type="button">Prepare creation list <span>→</span></button>
-        <p id="creatorMessage" class="message" aria-live="polite">This assistant prepares your batch details. Roblox must confirm each actual creation.</p>
-      </section>
-      <section class="panel uploadPanel">
-        <div class="sectionHead"><div class="stepNo">02</div><div class="sectionTitle"><h3>Creation checklist</h3><p>Review and copy your experience details.</p></div></div>
-        <pre id="experienceBatchResult" class="result">No creation list prepared yet.</pre>
-        <button id="copyExperienceBatchBtn" class="secondary full" type="button" disabled>Copy creation list</button>
-        <a class="guideLink creatorDashboardLink" href="https://create.roblox.com/dashboard/creations" target="_blank" rel="noopener noreferrer">Open Roblox Creator Dashboard ↗</a>
-        <div class="warning"><b>Important</b><br>This page does not use the cookie or automatically create experiences. The cookie field above is a local-only demonstration and is never sent to Roblox or our server. Create and confirm experiences through Roblox Creator Dashboard.</div>
-      </section>
-    </div>
+    <div class="sectionHeading"><div><div class="eyebrow">PIXEL CREATION CONSOLE</div><h2>Create Experience</h2></div><span class="secureTag">LOCAL-ONLY INPUT</span></div>
+    <section class="panel ezConsole">
+      <div class="ezTabs" role="tablist" aria-label="Creation mode">
+        <button class="ezTab active" data-ez-mode="universe" type="button">CREATE UNIVERSE</button>
+        <button class="ezTab" data-ez-mode="place" type="button">CREATE PLACE</button>
+        <button class="ezTab" data-ez-mode="log" type="button">LOG</button>
+      </div>
+      <div id="ezFormPanel" class="ezFormPanel">
+        <div class="ezFieldBlock">
+          <label>ROBLOSECURITY COOKIE <span class="ezTiny">OPTIONAL DEMO FIELD</span><input id="experienceCookie" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Cookie is not connected"></label>
+          <div class="cookieActions"><button id="toggleExperienceCookie" class="quiet" type="button">SHOW</button><button id="clearExperienceCookie" class="quiet" type="button">CLEAR</button></div>
+          <p class="hint">Security note: this field is never saved, transmitted, or used. Do not paste a real account cookie here. This creator cannot authenticate with cookies.</p>
+        </div>
+        <div class="ezTwoCol">
+          <label>EXPERIENCE NAME<input id="newExperienceName" maxlength="50" placeholder="My Experience"></label>
+          <label id="ezUniverseIdWrap" class="hidden">UNIVERSE ID<input id="ezUniverseId" inputmode="numeric" placeholder="Existing Universe ID"></label>
+        </div>
+        <label>DESCRIPTION<textarea id="newExperienceDescription" rows="3" maxlength="1000" placeholder="Describe your experience..."></textarea></label>
+        <div class="ezTwoCol">
+          <label>TEMPLATE PLACE ID<input id="experienceTemplateId" inputmode="numeric" value="95206881" placeholder="Template Place ID"></label>
+          <label>NUMBER TO CREATE<input id="experienceCount" type="number" min="1" max="10" value="1" inputmode="numeric"></label>
+        </div>
+        <label>DELAY BETWEEN REQUESTS (SECONDS)<input id="experienceDelay" type="number" min="0" max="300" value="2" inputmode="numeric"></label>
+        <div class="ezStatus"><span class="ezStatusLamp"></span><div><b id="ezReadyStatus">READY</b><small id="ezModeHint">Universe creation mode selected</small></div></div>
+        <div class="ezActions"><button id="prepareExperiencesBtn" class="primary" type="button">START CREATING</button><button id="stopExperiencesBtn" class="secondary" type="button" disabled>STOP</button></div>
+        <p id="creatorMessage" class="message" aria-live="polite">Ready. This console prepares details only; it does not create Roblox content.</p>
+      </div>
+      <div id="ezLogPanel" class="hidden">
+        <div class="ezLogHeader"><b>ACTIVITY LOG</b><button id="clearExperienceLog" class="quiet" type="button">CLEAR LOG</button></div>
+        <pre id="experienceBatchResult" class="ezLog">[SYSTEM] Console ready. No Roblox creation requests have been sent.</pre>
+        <button id="copyExperienceBatchBtn" class="secondary full" type="button" disabled>COPY LOG</button>
+      </div>
+      <div class="warning"><b>CREATION UNAVAILABLE</b><br>Roblox experience creation is not connected to this page. The Start button will not send requests or fake progress. Use the official Creator Dashboard to create and confirm experiences.</div>
+      <a class="guideLink creatorDashboardLink" href="https://create.roblox.com/dashboard/creations" target="_blank" rel="noopener noreferrer">OPEN ROBLOX CREATOR DASHBOARD ↗</a>
+    </section>
   </section>
   <section id="animationTab" class="tabPanel hidden">
     <div class="sectionHeading"><div><div class="eyebrow">ANIMATION TOOL</div><h2>Publish an animation</h2></div><span class="secureTag">WORKER SERVICE</span></div>
