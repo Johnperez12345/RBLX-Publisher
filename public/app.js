@@ -53,52 +53,44 @@ function showAnimationSuccess(assetId){const cleanId=String(assetId).replace(/^r
 $("copyAnimId").onclick=async()=>{if(!lastAnimationId)return;const value="rbxassetid://"+lastAnimationId;try{await navigator.clipboard.writeText(value);$("animMessage").textContent="Animation ID copied."}catch{$("animMessage").textContent="Copy failed. Select and copy the ID from the result."}};
 $("copyAnimLink").onclick=async()=>{if(!lastAnimationId)return;const link="https://create.roblox.com/store/asset/"+encodeURIComponent(lastAnimationId);try{await navigator.clipboard.writeText(link);$("animMessage").textContent="Animation link copied."}catch{$("animMessage").textContent="Copy failed. Open the link above and copy it from your browser."}};
 
-/* Pixel creation console: cookie field is intentionally inert and memory-only. */
-const experienceCookie=$("experienceCookie");
-let experienceBatchText="";
-let ezMode="universe";
-let ezLog="[SYSTEM] Console ready. No Roblox creation requests have been sent.";
+/* Existing experience lookup — API key is reused from the local Publish Place field. */
+let ezLog="[SYSTEM] Experience manager ready. No requests sent.";
 function renderEzLog(){ $("experienceBatchResult").textContent=ezLog; $("copyExperienceBatchBtn").disabled=!ezLog.trim(); }
-function appendEzLog(line){ezLog+="\\n"+line;renderEzLog();}
+function appendEzLog(line){ezLog+="\n"+line;renderEzLog();}
 document.querySelectorAll(".ezTab").forEach(button=>button.addEventListener("click",()=>{
- ezMode=button.dataset.ezMode;
+ const isLog=button.dataset.ezMode==="log";
  document.querySelectorAll(".ezTab").forEach(b=>b.classList.toggle("active",b===button));
- const isLog=ezMode==="log";
  $("ezFormPanel").classList.toggle("hidden",isLog);
  $("ezLogPanel").classList.toggle("hidden",!isLog);
- $("ezUniverseIdWrap").classList.toggle("hidden",ezMode!=="place");
- $("ezModeHint").textContent=ezMode==="place"?"Place creation mode selected":ezMode==="log"?"Activity log":"Universe creation mode selected";
  if(isLog)renderEzLog();
 }));
-$("toggleExperienceCookie").onclick=()=>{
- const reveal=experienceCookie.type==="password";
- experienceCookie.type=reveal?"text":"password";
- $("toggleExperienceCookie").textContent=reveal?"HIDE":"SHOW";
-};
-$("clearExperienceCookie").onclick=()=>{
- experienceCookie.value="";experienceCookie.type="password";$("toggleExperienceCookie").textContent="SHOW";
-};
-$("logoutBtn").addEventListener("click",()=>{experienceCookie.value="";experienceCookie.type="password";$("toggleExperienceCookie").textContent="SHOW";});
-$("prepareExperiencesBtn").onclick=()=>{
- const name=$("newExperienceName").value.trim(),description=$("newExperienceDescription").value.trim();
- const templateId=$("experienceTemplateId").value.trim(),count=Number($("experienceCount").value),delay=Number($("experienceDelay").value);
+$("loadExperienceBtn").onclick=async()=>{
  const universeId=$("ezUniverseId").value.trim();
- if(!name){$("creatorMessage").textContent="Enter an experience name.";return}
- if(!/^\\d+$/.test(templateId)){ $("creatorMessage").textContent="Enter a numeric template Place ID.";return}
- if(ezMode==="place"&&!/^\\d+$/.test(universeId)){ $("creatorMessage").textContent="Enter the Universe ID for the target experience.";return}
- if(!Number.isInteger(count)||count<1||count>10){$("creatorMessage").textContent="Quantity must be between 1 and 10.";return}
- if(!Number.isFinite(delay)||delay<0||delay>300){$("creatorMessage").textContent="Delay must be from 0 to 300 seconds.";return}
- const mode=ezMode==="place"?"Place":"Universe";
- experienceBatchText=[`MODE: Create ${mode}`,`NAME: ${name}`,`DESCRIPTION: ${description||"(none)"}`,`TEMPLATE PLACE ID: ${templateId}`,...(ezMode==="place"?[`UNIVERSE ID: ${universeId}`]:[]),`QUANTITY: ${count}`,`DELAY: ${delay}s`, "STATUS: NOT CREATED — manual action required in Roblox Creator Dashboard."].join("\\n");
- $("creatorMessage").textContent="Not started. This page cannot create experiences; no cookie or request was sent.";
- $("ezReadyStatus").textContent="NOT CONNECTED";
- appendEzLog("[BLOCKED] Start requested; no Roblox request was sent. Use Creator Dashboard.");
+ const key=$("apiKey").value.trim();
+ if(!/^\d{1,25}$/.test(universeId)){ $("creatorMessage").textContent="Enter a valid numeric Universe ID.";return; }
+ if(!key){ $("creatorMessage").textContent="Add your Roblox Open Cloud API key in Publish Place first.";return; }
+ $("loadExperienceBtn").disabled=true;
+ $("ezReadyStatus").textContent="LOADING";
+ $("ezModeHint").textContent="Requesting existing experience details from Roblox";
+ $("creatorMessage").textContent="Contacting Roblox Open Cloud…";
+ $("experienceDetails").textContent="Loading…";
+ try{
+  const data=await api("/api/roblox/universes/"+encodeURIComponent(universeId),{headers:{"x-roblox-api-key":key}});
+  $("experienceDetails").textContent=JSON.stringify(data,null,2);
+  $("ezReadyStatus").textContent="LOADED";
+  $("ezModeHint").textContent="Roblox returned experience data";
+  $("creatorMessage").textContent="Experience lookup succeeded.";
+  appendEzLog("[OK] Loaded Universe "+universeId+" from Roblox Open Cloud.");
+ }catch(err){
+  $("experienceDetails").textContent="Lookup failed.\n"+err.message;
+  $("ezReadyStatus").textContent="ERROR";
+  $("ezModeHint").textContent="Check Universe ID, key access, and universe:read permission";
+  $("creatorMessage").textContent=err.message;
+  appendEzLog("[ERROR] Universe "+universeId+": "+err.message);
+ }finally{$("loadExperienceBtn").disabled=false;}
 };
-$("stopExperiencesBtn").onclick=()=>{$("creatorMessage").textContent="No active job to stop.";appendEzLog("[INFO] No active creation job.");};
-$("clearExperienceLog").onclick=()=>{ezLog="[SYSTEM] Log cleared. No Roblox creation requests have been sent.";renderEzLog();};
+$("clearExperienceLog").onclick=()=>{ezLog="[SYSTEM] Log cleared.";renderEzLog();};
 $("copyExperienceBatchBtn").onclick=async()=>{
- const textToCopy=experienceBatchText||ezLog;
- try{await navigator.clipboard.writeText(textToCopy);$("creatorMessage").textContent="Copied to clipboard."}
+ try{await navigator.clipboard.writeText(ezLog);$("creatorMessage").textContent="Log copied."}
  catch{$("creatorMessage").textContent="Copy unavailable. Select the log text and copy it."}
 };
-
