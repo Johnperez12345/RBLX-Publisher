@@ -8,7 +8,17 @@
 <div class="shell">
 <header class="topbar">
   <a class="brand" href="/" aria-label="RBLX Publisher home"><div class="logo">R</div><div><b>RBLX Publisher</b><small>Roblox Open Cloud</small></div></a>
-  <button id="logoutBtn" class="quiet hidden">Log out</button>
+  <div class="topActions">
+    <div class="menuWrap">
+      <button id="menuToggle" class="menuToggle" type="button" aria-expanded="false" aria-controls="publisherMenu"><span class="menuGlyph">☰</span> Menu</button>
+      <nav id="publisherMenu" class="publisherMenu hidden" aria-label="Publisher menu">
+        <button class="tabButton active" data-tab="placeTab" type="button"><span>01</span> Publish Place</button>
+        <button class="tabButton" data-tab="animationTab" type="button"><span>02</span> Publish Animation</button>
+        <button class="tabButton" data-tab="guideTab" type="button"><span>03</span> How to Get Key</button>
+      </nav>
+    </div>
+    <button id="logoutBtn" class="quiet hidden">Log out</button>
+  </div>
 </header>
 <main>
 <section id="loginView" class="panel narrow">
@@ -27,11 +37,6 @@
     </div>
     <div class="heroMark" aria-hidden="true"><div class="heroMarkInner">R</div><span>OPEN<br>CLOUD</span></div>
   </div>
-  <nav class="tabNav" aria-label="Publisher sections">
-    <button class="tabButton active" data-tab="placeTab" type="button">Publish Place</button>
-    <button class="tabButton" data-tab="animationTab" type="button">Publish Animation</button>
-    <button class="tabButton" data-tab="guideTab" type="button">How to Get Key</button>
-  </nav>
   <section id="placeTab" class="tabPanel">
     <div class="stats">
       <div class="stat"><div class="statIcon">⌁</div><div><small>DESTINATION PLACE</small><b id="placeStat">Not set</b></div></div>
