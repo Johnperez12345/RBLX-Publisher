@@ -74,6 +74,9 @@
     <div class="dashboardGrid creatorGrid">
       <section class="panel connectionPanel">
         <div class="sectionHead"><div class="stepNo">01</div><div class="sectionTitle"><h3>Experience details</h3><p>Prepare the details for your new Roblox experience.</p></div></div>
+        <label>ROBLOSECURITY cookie (local-only demo field)<input id="experienceCookie" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Cookie field — not connected"></label>
+        <div class="cookieActions"><button id="toggleExperienceCookie" class="quiet" type="button">Show cookie</button><button id="clearExperienceCookie" class="quiet" type="button">Clear</button></div>
+        <p class="hint">This field stays in page memory only and is cleared on reload or logout. It is never saved or sent anywhere, and it is NOT used to create experiences.</p>
         <label>Experience name<input id="newExperienceName" maxlength="50" placeholder="My New Experience"></label>
         <label>Description<textarea id="newExperienceDescription" rows="5" maxlength="1000" placeholder="Describe your game..."></textarea></label>
         <label>Starting template<select id="experienceTemplate"><option value="Baseplate">Baseplate</option><option value="Village">Village</option><option value="Obby">Obby</option><option value="Racing">Racing</option><option value="Tycoon">Tycoon</option></select></label>
@@ -86,7 +89,7 @@
         <pre id="experienceBatchResult" class="result">No creation list prepared yet.</pre>
         <button id="copyExperienceBatchBtn" class="secondary full" type="button" disabled>Copy creation list</button>
         <a class="guideLink creatorDashboardLink" href="https://create.roblox.com/dashboard/creations" target="_blank" rel="noopener noreferrer">Open Roblox Creator Dashboard ↗</a>
-        <div class="warning"><b>Important</b><br>This does not automatically create experiences. Roblox does not provide a documented public Open Cloud endpoint for creating a new universe. Do not paste your .ROBLOSECURITY cookie here; it grants access to your account.</div>
+        <div class="warning"><b>Important</b><br>This page does not use the cookie or automatically create experiences. The cookie field above is a local-only demonstration and is never sent to Roblox or our server. Create and confirm experiences through Roblox Creator Dashboard.</div>
       </section>
     </div>
   </section>
