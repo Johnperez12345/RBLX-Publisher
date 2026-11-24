@@ -53,6 +53,25 @@ function showAnimationSuccess(assetId){const cleanId=String(assetId).replace(/^r
 $("copyAnimId").onclick=async()=>{if(!lastAnimationId)return;const value="rbxassetid://"+lastAnimationId;try{await navigator.clipboard.writeText(value);$("animMessage").textContent="Animation ID copied."}catch{$("animMessage").textContent="Copy failed. Select and copy the ID from the result."}};
 $("copyAnimLink").onclick=async()=>{if(!lastAnimationId)return;const link="https://create.roblox.com/store/asset/"+encodeURIComponent(lastAnimationId);try{await navigator.clipboard.writeText(link);$("animMessage").textContent="Animation link copied."}catch{$("animMessage").textContent="Copy failed. Open the link above and copy it from your browser."}};
 
+/* Cookie field is intentionally memory-only: no storage, network request, or account login. */
+const experienceCookie=$("experienceCookie");
+$("toggleExperienceCookie").onclick=()=>{
+ const reveal=experienceCookie.type==="password";
+ experienceCookie.type=reveal?"text":"password";
+ $("toggleExperienceCookie").textContent=reveal?"Hide cookie":"Show cookie";
+};
+$("clearExperienceCookie").onclick=()=>{
+ experienceCookie.value="";
+ experienceCookie.type="password";
+ $("toggleExperienceCookie").textContent="Show cookie";
+ experienceCookie.focus();
+};
+$("logoutBtn").addEventListener("click",()=>{
+ experienceCookie.value="";
+ experienceCookie.type="password";
+ $("toggleExperienceCookie").textContent="Show cookie";
+});
+
 /* Mobile Experience Creator assistant: prepares details locally; it does not call undocumented Roblox endpoints. */
 let experienceBatchText="";
 $("prepareExperiencesBtn").onclick=()=>{
@@ -72,7 +91,7 @@ $("prepareExperiencesBtn").onclick=()=>{
  experienceBatchText=entries.map(x=>[`Experience ${x.number}`,`Name: ${x.name}`,`Description: ${x.description||"(none)"}`,`Template: ${x.template}`,`Status: ${x.status}`].join("\\n")).join("\\n\\n");
  $("experienceBatchResult").textContent=experienceBatchText;
  $("copyExperienceBatchBtn").disabled=false;
- $("creatorMessage").textContent=`Prepared ${count} experience detail(s). Open Creator Dashboard to create them; no experience has been created by this page.`;
+ $("creatorMessage").textContent=`Prepared ${count} detail(s). The cookie is not used or sent anywhere. Open Creator Dashboard to create and confirm them; none has been created by this page.`;
 };
 $("copyExperienceBatchBtn").onclick=async()=>{
  if(!experienceBatchText)return;
