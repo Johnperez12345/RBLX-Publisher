@@ -70,40 +70,26 @@
     </div>
   </section>
   <section id="creatorTab" class="tabPanel hidden">
-    <div class="sectionHeading"><div><div class="eyebrow">PIXEL CREATION CONSOLE</div><h2>Create Experience</h2></div><span class="secureTag">LOCAL-ONLY INPUT</span></div>
+    <div class="sectionHeading"><div><div class="eyebrow">ROBLOX OPEN CLOUD</div><h2>Manage Experience</h2></div><span class="secureTag">API KEY AUTH</span></div>
     <section class="panel ezConsole">
-      <div class="ezTabs" role="tablist" aria-label="Creation mode">
-        <button class="ezTab active" data-ez-mode="universe" type="button">CREATE UNIVERSE</button>
-        <button class="ezTab" data-ez-mode="place" type="button">CREATE PLACE</button>
+      <div class="ezTabs" role="tablist" aria-label="Experience tools">
+        <button class="ezTab active" data-ez-mode="lookup" type="button">LOOKUP EXPERIENCE</button>
         <button class="ezTab" data-ez-mode="log" type="button">LOG</button>
       </div>
       <div id="ezFormPanel" class="ezFormPanel">
-        <div class="ezFieldBlock">
-          <label>ROBLOSECURITY COOKIE <span class="ezTiny">OPTIONAL DEMO FIELD</span><input id="experienceCookie" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Cookie is not connected"></label>
-          <div class="cookieActions"><button id="toggleExperienceCookie" class="quiet" type="button">SHOW</button><button id="clearExperienceCookie" class="quiet" type="button">CLEAR</button></div>
-          <p class="hint">Security note: this field is never saved, transmitted, or used. Do not paste a real account cookie here. This creator cannot authenticate with cookies.</p>
-        </div>
-        <div class="ezTwoCol">
-          <label>EXPERIENCE NAME<input id="newExperienceName" maxlength="50" placeholder="My Experience"></label>
-          <label id="ezUniverseIdWrap" class="hidden">UNIVERSE ID<input id="ezUniverseId" inputmode="numeric" placeholder="Existing Universe ID"></label>
-        </div>
-        <label>DESCRIPTION<textarea id="newExperienceDescription" rows="3" maxlength="1000" placeholder="Describe your experience..."></textarea></label>
-        <div class="ezTwoCol">
-          <label>TEMPLATE PLACE ID<input id="experienceTemplateId" inputmode="numeric" value="95206881" placeholder="Template Place ID"></label>
-          <label>NUMBER TO CREATE<input id="experienceCount" type="number" min="1" max="10" value="1" inputmode="numeric"></label>
-        </div>
-        <label>DELAY BETWEEN REQUESTS (SECONDS)<input id="experienceDelay" type="number" min="0" max="300" value="2" inputmode="numeric"></label>
-        <div class="ezStatus"><span class="ezStatusLamp"></span><div><b id="ezReadyStatus">READY</b><small id="ezModeHint">Universe creation mode selected</small></div></div>
-        <div class="ezActions"><button id="prepareExperiencesBtn" class="primary" type="button">START CREATING</button><button id="stopExperiencesBtn" class="secondary" type="button" disabled>STOP</button></div>
-        <p id="creatorMessage" class="message" aria-live="polite">Ready. This console prepares details only; it does not create Roblox content.</p>
+        <p class="hint">Load information for an existing experience using the Roblox Open Cloud API key from the Publish Place tab. The key must have <b>universe:read</b> permission for that experience.</p>
+        <label>UNIVERSE ID<input id="ezUniverseId" inputmode="numeric" autocomplete="off" placeholder="Enter an existing Universe ID"></label>
+        <div class="ezActions"><button id="loadExperienceBtn" class="primary" type="button">LOAD EXPERIENCE</button><a class="secondary guideLink" href="https://create.roblox.com/dashboard/creations" target="_blank" rel="noopener noreferrer">CREATOR DASHBOARD ↗</a></div>
+        <div class="ezStatus"><span class="ezStatusLamp"></span><div><b id="ezReadyStatus">READY</b><small id="ezModeHint">Waiting for an existing Universe ID</small></div></div>
+        <p id="creatorMessage" class="message" aria-live="polite">No Roblox request sent yet.</p>
+        <pre id="experienceDetails" class="ezLog">Experience details will appear here after a successful lookup.</pre>
       </div>
       <div id="ezLogPanel" class="hidden">
         <div class="ezLogHeader"><b>ACTIVITY LOG</b><button id="clearExperienceLog" class="quiet" type="button">CLEAR LOG</button></div>
-        <pre id="experienceBatchResult" class="ezLog">[SYSTEM] Console ready. No Roblox creation requests have been sent.</pre>
+        <pre id="experienceBatchResult" class="ezLog">[SYSTEM] Experience manager ready. No requests sent.</pre>
         <button id="copyExperienceBatchBtn" class="secondary full" type="button" disabled>COPY LOG</button>
       </div>
-      <div class="warning"><b>CREATION UNAVAILABLE</b><br>Roblox experience creation is not connected to this page. The Start button will not send requests or fake progress. Use the official Creator Dashboard to create and confirm experiences.</div>
-      <a class="guideLink creatorDashboardLink" href="https://create.roblox.com/dashboard/creations" target="_blank" rel="noopener noreferrer">OPEN ROBLOX CREATOR DASHBOARD ↗</a>
+      <div class="warning"><b>SUPPORTED API LIMIT</b><br>This tool reads an existing experience. Roblox's documented Open Cloud API does not provide a create-new-Universe action here. No ROBLOSECURITY cookie is collected or used.</div>
     </section>
   </section>
   <section id="animationTab" class="tabPanel hidden">
