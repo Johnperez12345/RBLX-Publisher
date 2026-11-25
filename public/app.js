@@ -138,7 +138,7 @@ $("publishPostBtn").onclick=async()=>{
  const name=$("postName").value.trim(),robloxId=$("postRobloxId").value.trim();
  if(!selectedPostImage){$("postMessage").textContent="Choose a post image first.";return}
  if(!name){$("postMessage").textContent="Enter the post name.";return}
- if(!/^\\d{1,25}$/.test(robloxId)){$("postMessage").textContent="Enter a valid numeric Roblox ID.";return}
+ if(!/^\d{1,25}$/.test(robloxId)){$("postMessage").textContent="Enter a valid numeric Roblox ID.";return}
  const form=new FormData();form.append("image",selectedPostImage);form.append("name",name);form.append("robloxId",robloxId);
  $("publishPostBtn").disabled=true;$("postMessage").textContent="Uploading post image…";
  try{
