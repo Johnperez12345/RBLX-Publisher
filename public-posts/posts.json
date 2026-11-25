@@ -1,3 +1,11 @@
 {
-  "posts": []
+  "posts": [
+    {
+      "id": "b206dfc1-562c-4ca0-82aa-6eafce2649ec",
+      "name": "Spawner",
+      "robloxId": "121198974837039",
+      "imageUrl": "https://raw.githubusercontent.com/Johnperez12345/RBLX-Publisher/main/public-posts/images/b206dfc1-562c-4ca0-82aa-6eafce2649ec.png",
+      "createdAt": "2026-11-25T06:33:33.792Z"
+    }
+  ]
 }
