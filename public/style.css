@@ -323,3 +323,18 @@ footer{border-top:2px solid #263b57;font-family:"Courier New",monospace}
 .ezConsole .warning{border-radius:0;font:10px/1.6 "Courier New",monospace}
 .ezConsole .guideLink{font:700 10px "Courier New",monospace}
 @media(max-width:520px){.ezConsole{padding:11px}.ezTabs{grid-template-columns:1fr 1fr .7fr}.ezTab{font-size:8px;min-height:40px}.ezTwoCol{grid-template-columns:1fr;gap:0}.ezTiny{float:none;display:block;margin-top:5px}.ezActions{grid-template-columns:1fr 1fr}}
+
+
+/* Login and visitor counter polish — isolated to the public login screen */
+#loginView.narrow{max-width:520px;padding:clamp(24px,5vw,38px);border-radius:4px;background:linear-gradient(145deg,rgba(19,34,53,.98),rgba(12,23,38,.98));border:1px solid #496584;box-shadow:0 20px 55px #0006, inset 0 1px #ffffff0c}
+#loginView .eyebrow{letter-spacing:2px;color:#a9c5e3}
+#loginView h1{font-size:clamp(36px,8vw,48px);line-height:1.08;letter-spacing:-1.6px;margin:18px 0 12px}
+#loginView .muted{color:#afbed0;line-height:1.7}
+#loginView label{font-size:12px;letter-spacing:.2px}
+#loginView input{min-height:58px;border-radius:3px;background:#091321;border:1px solid #496584;font-size:15px;padding:16px}
+#loginView input:focus{border-color:#9bbde1;box-shadow:0 0 0 3px #8fb6df22}
+#loginView .primary{min-height:58px;border-radius:3px;font-size:13px;letter-spacing:1px;background:linear-gradient(110deg,#527da8,#3e6389);border:1px solid #8baed2}
+.visitCounter{margin-top:25px;padding-top:18px;border-top:1px solid #30465f;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.visitCounter>.eyebrow{font-size:9px;line-height:1.5}
+.visitCounter .counterapi{min-height:42px!important;display:flex;align-items:center;justify-content:center;min-width:76px;padding:7px 12px;border:1px solid #3d5876;background:#0a1726;color:#e8f2fc;font-size:21px;font-weight:800;letter-spacing:1px;line-height:1;border-radius:3px;box-shadow:inset 0 1px #ffffff0b}
+@media(max-width:480px){#loginView.narrow{margin:6vh auto;padding:22px 19px}.visitCounter{align-items:flex-start;flex-direction:column}.visitCounter .counterapi{min-width:90px}}
