@@ -323,3 +323,9 @@ footer{border-top:2px solid #263b57;font-family:"Courier New",monospace}
 .ezConsole .warning{border-radius:0;font:10px/1.6 "Courier New",monospace}
 .ezConsole .guideLink{font:700 10px "Courier New",monospace}
 @media(max-width:520px){.ezConsole{padding:11px}.ezTabs{grid-template-columns:1fr 1fr .7fr}.ezTab{font-size:8px;min-height:40px}.ezTwoCol{grid-template-columns:1fr;gap:0}.ezTiny{float:none;display:block;margin-top:5px}.ezActions{grid-template-columns:1fr 1fr}}
+
+/* Visitor counter: eye icon + clean numeric value */
+.visitCounter{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.visitCountValue{display:inline-flex;align-items:center;gap:12px;min-height:42px;padding:7px 13px;background:#05090f;border:1px solid #263a50;color:#f0f5fb;font:700 21px/1.2 Georgia,serif;letter-spacing:0}
+.visitEye{color:#25e8ed;font:700 25px/1 Arial,sans-serif}
+#visitNumber{font-variant-numeric:tabular-nums}
