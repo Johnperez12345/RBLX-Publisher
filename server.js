@@ -84,7 +84,7 @@ app.post("/api/posts",auth,postUpload.single("image"),async(req,res)=>{
   const robloxId=String(req.body.robloxId||"").trim();
   const image=req.file;
   if(!name)return res.status(400).json({error:"Enter the post name."});
-  if(!/^\\d{1,25}$/.test(robloxId))return res.status(400).json({error:"Enter a valid numeric Roblox ID."});
+  if(!/^\d{1,25}$/.test(robloxId))return res.status(400).json({error:"Enter a valid numeric Roblox ID."});
   if(!image)return res.status(400).json({error:"Choose a post image."});
   const form=new FormData();
   form.append("name",name);form.append("robloxId",robloxId);
