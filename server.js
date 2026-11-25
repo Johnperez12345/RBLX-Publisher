@@ -53,7 +53,7 @@ require("./createExperience")(app,publicAccess);
 /* Public post gallery. GitHub repository storage; only admin session can publish/delete. */
 const postUpload=multer({
  storage:multer.memoryStorage(),
- limits:{fileSize:1*1024*1024,files:1},
+ limits:{fileSize:8*1024*1024,files:1},
  fileFilter:(req,file,cb)=>{
   const allowed=["image/jpeg","image/png","image/webp","image/gif"];
   cb(allowed.includes(file.mimetype)?null:new Error("Only JPG, PNG, WEBP or GIF images are allowed."),allowed.includes(file.mimetype));
