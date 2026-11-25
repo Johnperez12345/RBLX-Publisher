@@ -36,7 +36,7 @@ app.get("/api/roblox/universes/:id",async(req,res)=>{
  try{
   const universeId=String(req.params.id||"").trim();
   const key=String(req.headers["x-roblox-api-key"]||"").trim();
-  if(!/^\\d{1,25}$/.test(universeId))return res.status(400).json({error:"Invalid Universe ID."});
+  if(!/^\d{1,25}$/.test(universeId))return res.status(400).json({error:"Invalid Universe ID."});
   if(!key)return res.status(400).json({error:"Enter your Roblox Open Cloud API key."});
   const upstream=await fetch("https://apis.roblox.com/cloud/v2/universes/"+encodeURIComponent(universeId),{
    method:"GET",headers:{"x-api-key":key}
@@ -109,7 +109,7 @@ app.post("/api/posts",auth,postUpload.single("image"),async(req,res)=>{
   const robloxId=String(req.body.robloxId||"").trim();
   const image=req.file;
   if(!name)return res.status(400).json({error:"Enter the post name."});
-  if(!/^\\d{1,25}$/.test(robloxId))return res.status(400).json({error:"Enter a valid numeric Roblox ID."});
+  if(!/^\d{1,25}$/.test(robloxId))return res.status(400).json({error:"Enter a valid numeric Roblox ID."});
   if(!image)return res.status(400).json({error:"Choose a post image."});
   const extension={ "image/jpeg":"jpg","image/png":"png","image/webp":"webp","image/gif":"gif" }[image.mimetype];
   if(!extension)return res.status(415).json({error:"Only JPG, PNG, WEBP or GIF images are allowed."});
