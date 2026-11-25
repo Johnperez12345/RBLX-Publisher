@@ -50,52 +50,93 @@ app.get("/api/roblox/universes/:id",async(req,res)=>{
 const publicAccess=(req,res,next)=>next();
 require("./createExperience")(app,publicAccess);
 
-/* Public post gallery. Writes and deletes require the authenticated admin session.
-   Images and the posts index are stored by the Cloudflare R2 Worker, not on Render's
-   ephemeral filesystem. */
+/* Public post gallery. GitHub repository storage; only admin session can publish/delete. */
 const postUpload=multer({
  storage:multer.memoryStorage(),
- limits:{fileSize:8*1024*1024,files:1},
+ limits:{fileSize:1*1024*1024,files:1},
  fileFilter:(req,file,cb)=>{
   const allowed=["image/jpeg","image/png","image/webp","image/gif"];
   cb(allowed.includes(file.mimetype)?null:new Error("Only JPG, PNG, WEBP or GIF images are allowed."),allowed.includes(file.mimetype));
  }
 });
-const POSTS_WORKER_URL=String(process.env.POSTS_WORKER_URL||"").replace(/\/+$/,"");
-const POSTS_WORKER_SECRET=String(process.env.POSTS_WORKER_SECRET||"");
-async function postsWorker(path,options={}){
- if(!POSTS_WORKER_URL||!POSTS_WORKER_SECRET)throw new Error("Post storage is not configured yet.");
- const response=await fetch(POSTS_WORKER_URL+path,{
-  ...options,
-  headers:{"x-post-storage-secret":POSTS_WORKER_SECRET,...(options.headers||{})}
- });
- const raw=await response.text();let data={};
- try{data=raw?JSON.parse(raw):{}}catch{data={error:"Storage service returned an invalid response."}}
- if(!response.ok)throw new Error(data.error||"Post storage request failed ("+response.status+").");
+const GITHUB_TOKEN=String(process.env.GITHUB_TOKEN||"");
+const GITHUB_REPO=String(process.env.GITHUB_REPO||"Johnperez12345/RBLX-Publisher");
+const GITHUB_BRANCH=String(process.env.GITHUB_BRANCH||"main");
+const POSTS_DIR="public-posts";
+const POSTS_INDEX=POSTS_DIR+"/posts.json";
+function githubHeaders(){return { "accept":"application/vnd.github+json", "authorization":"Bearer "+GITHUB_TOKEN, "x-github-api-version":"2022-11-28", "content-type":"application/json" };}
+function githubPath(file){return file.split("/").map(encodeURIComponent).join("/");}
+async function githubGetFile(file){
+ const response=await fetch("https://api.github.com/repos/"+GITHUB_REPO+"/contents/"+githubPath(file)+"?ref="+encodeURIComponent(GITHUB_BRANCH),{headers:githubHeaders()});
+ if(response.status===404)return null;
+ if(!response.ok)throw new Error("GitHub storage read failed ("+response.status+").");
+ const data=await response.json();
+ return {sha:data.sha,content:Buffer.from(String(data.content||"").replace(/\\n/g,""),"base64")};
+}
+async function githubPutFile(file,bytes,message,sha){
+ const body={message,content:Buffer.from(bytes).toString("base64"),branch:GITHUB_BRANCH};
+ if(sha)body.sha=sha;
+ const response=await fetch("https://api.github.com/repos/"+GITHUB_REPO+"/contents/"+githubPath(file),{method:"PUT",headers:githubHeaders(),body:JSON.stringify(body)});
+ const data=await response.json().catch(()=>({}));
+ if(!response.ok)throw new Error(data.message||"GitHub storage write failed ("+response.status+").");
  return data;
 }
+async function githubDeleteFile(file,sha,message){
+ const response=await fetch("https://api.github.com/repos/"+GITHUB_REPO+"/contents/"+githubPath(file),{method:"DELETE",headers:githubHeaders(),body:JSON.stringify({message,sha,branch:GITHUB_BRANCH})});
+ const data=await response.json().catch(()=>({}));
+ if(!response.ok)throw new Error(data.message||"GitHub storage delete failed ("+response.status+").");
+ return data;
+}
+async function readPosts(){
+ const file=await githubGetFile(POSTS_INDEX);
+ if(!file)return [];
+ try{const data=JSON.parse(file.content.toString("utf8"));return Array.isArray(data.posts)?data.posts:[]}
+ catch{throw new Error("Posts index is invalid.");}
+}
+async function savePosts(posts){
+ const existing=await githubGetFile(POSTS_INDEX);
+ await githubPutFile(POSTS_INDEX,Buffer.from(JSON.stringify({posts},null,2)), "Update community posts",existing&&existing.sha);
+}
+function postImageUrl(filename){return "https://raw.githubusercontent.com/"+GITHUB_REPO+"/"+encodeURIComponent(GITHUB_BRANCH)+"/"+POSTS_DIR+"/images/"+encodeURIComponent(filename);}
 app.get("/api/posts",async(req,res)=>{
- try{const data=await postsWorker("/api/posts",{method:"GET",headers:{}});res.json({posts:Array.isArray(data.posts)?data.posts:[]})}
- catch(e){res.status(503).json({error:e.message||"Posts are temporarily unavailable."})}
+ try{res.json({posts:await readPosts()})}
+ catch(e){console.error("Posts read failed:",e.message);res.status(503).json({error:"Posts are temporarily unavailable. Storage setup may be incomplete."})}
 });
 app.post("/api/posts",auth,postUpload.single("image"),async(req,res)=>{
  try{
+  if(!GITHUB_TOKEN)return res.status(503).json({error:"GitHub storage is not configured yet."});
   const name=String(req.body.name||"").trim().slice(0,100);
   const robloxId=String(req.body.robloxId||"").trim();
   const image=req.file;
   if(!name)return res.status(400).json({error:"Enter the post name."});
-  if(!/^\d{1,25}$/.test(robloxId))return res.status(400).json({error:"Enter a valid numeric Roblox ID."});
+  if(!/^\\d{1,25}$/.test(robloxId))return res.status(400).json({error:"Enter a valid numeric Roblox ID."});
   if(!image)return res.status(400).json({error:"Choose a post image."});
-  const form=new FormData();
-  form.append("name",name);form.append("robloxId",robloxId);
-  form.append("image",new Blob([image.buffer],{type:image.mimetype}),image.originalname||"post-image");
-  const data=await postsWorker("/api/posts",{method:"POST",body:form,headers:{}});
-  res.status(201).json(data);
- }catch(e){res.status(503).json({error:e.message||"Could not publish the post."})}
+  const extension={ "image/jpeg":"jpg","image/png":"png","image/webp":"webp","image/gif":"gif" }[image.mimetype];
+  if(!extension)return res.status(415).json({error:"Only JPG, PNG, WEBP or GIF images are allowed."});
+  const posts=await readPosts();
+  const id=crypto.randomUUID(),filename=id+"."+extension;
+  await githubPutFile(POSTS_DIR+"/images/"+filename,image.buffer,"Add community post image "+id);
+  const post={id,name,robloxId,imageUrl:postImageUrl(filename),createdAt:new Date().toISOString()};
+  posts.unshift(post);
+  await savePosts(posts);
+  res.status(201).json({ok:true,post});
+ }catch(e){console.error("Post publish failed:",e.message);res.status(503).json({error:e.message||"Could not publish the post."})}
 });
 app.delete("/api/posts/:id",auth,async(req,res)=>{
- try{const data=await postsWorker("/api/posts/"+encodeURIComponent(String(req.params.id)),{method:"DELETE",headers:{}});res.json(data)}
- catch(e){res.status(503).json({error:e.message||"Could not delete the post."})}
+ try{
+  if(!GITHUB_TOKEN)return res.status(503).json({error:"GitHub storage is not configured yet."});
+  const id=String(req.params.id||"");
+  if(!/^[a-f0-9-]{36}$/.test(id))return res.status(400).json({error:"Invalid post ID."});
+  const posts=await readPosts(),post=posts.find(item=>item.id===id);
+  if(!post)return res.status(404).json({error:"Post not found."});
+  await savePosts(posts.filter(item=>item.id!==id));
+  const filename=String(post.imageUrl||"").split("/").pop();
+  if(/^[a-f0-9-]{36}\\.(jpg|png|webp|gif)$/.test(filename)){
+   const imageFile=await githubGetFile(POSTS_DIR+"/images/"+filename);
+   if(imageFile)await githubDeleteFile(POSTS_DIR+"/images/"+filename,imageFile.sha,"Delete community post image "+id);
+  }
+  res.json({ok:true});
+ }catch(e){console.error("Post delete failed:",e.message);res.status(503).json({error:e.message||"Could not delete the post."})}
 });
 
 app.get("/health",(_,res)=>res.json({ok:true,service:"rblx-publisher"}));
