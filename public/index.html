@@ -10,8 +10,11 @@
   <a class="brand" href="/" aria-label="RBLX Publisher home"><div class="logo">R</div><div><b>RBLX Publisher</b><small>Roblox Open Cloud</small></div></a>
   <div class="topActions">
     <div class="menuWrap">
-      <button id="menuToggle" class="menuToggle hidden" type="button" aria-expanded="false" aria-controls="publisherMenu"><span class="menuGlyph">☰</span> Menu</button>
+      <button id="menuToggle" class="menuToggle" type="button" aria-expanded="false" aria-controls="publisherMenu"><span class="menuGlyph">☰</span> Menu</button>
       <nav id="publisherMenu" class="publisherMenu hidden" aria-label="Publisher menu">
+        <button class="tabButton active" data-tab="mainDashboardTab" type="button"><span>00</span> Main Dashboard</button>
+        <button class="tabButton" data-tab="settingsTab" type="button"><span>05</span> Settings</button>
+        <button id="adminPostTabButton" class="tabButton hidden" data-tab="adminPostTab" type="button"><span>06</span> Post</button>
         <button class="tabButton active" data-tab="placeTab" type="button"><span>01</span> Publish Place</button>
         <button class="tabButton" data-tab="creatorTab" type="button"><span>02</span> Create Experience</button>
         <button class="tabButton" data-tab="animationTab" type="button"><span>03</span> Publish Animation</button>
@@ -23,17 +26,8 @@
   </div>
 </header>
 <main>
-<section id="loginView" class="panel narrow">
-  <div class="eyebrow">PRIVATE DASHBOARD</div><h1>Welcome back.</h1>
-  <p class="muted">Sign in to publish a Roblox place file.</p>
-  <form id="loginForm">
-    <label>Dashboard password<input id="password" type="password" autocomplete="current-password" required placeholder="Dashboard password"></label>
-    <p style="margin:10px 0 16px;font-size:12px;color:#aebdd0">Need the dashboard password? <a href="https://www.tiktok.com/@johngalias3" target="_blank" rel="noopener noreferrer" style="color:#9fc5ed;text-decoration:underline;font-weight:700">PM here on TikTok</a>.</p>
-    <button class="primary full">Log in <span>→</span></button><p id="loginError" class="error"></p>
-    <div class="visitCounter" aria-live="polite"><span class="eyebrow">TOTAL WEBSITE VISITS</span><div id="visitCount" class="visitCountValue" style="min-height:32px"><svg class="visitEye" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="12" cy="12" r="3.2" fill="currentColor"/></svg><span id="visitNumber">Loading…</span></div></div>
-  </form>
-</section>
-<section id="appView" class="hidden">
+
+<section id="appView">
   <div class="hero">
     <div class="heroCopy"><div class="eyebrow">CREATOR TOOLKIT <span class="liveDot"></span> READY TO PUBLISH</div>
       <h1>Publish with<br><em>confidence.</em></h1>
@@ -41,7 +35,51 @@
     </div>
     <div class="heroMark" aria-hidden="true"><div class="heroMarkInner">R</div><span>OPEN<br>CLOUD</span></div>
   </div>
-  <section id="placeTab" class="tabPanel">
+
+  <section id="mainDashboardTab" class="tabPanel">
+    <div class="sectionHeading"><div><div class="eyebrow">COMMUNITY POSTS</div><h2>Main Dashboard</h2></div><span class="secureTag"><span></span> PUBLIC VIEW</span></div>
+    <div class="visitCounter dashboardVisits" aria-live="polite">
+      <span class="eyebrow">TOTAL WEBSITE VISITS</span>
+      <div id="visitCount" class="visitCountValue"><svg class="visitEye" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="12" cy="12" r="3.2" fill="currentColor"/></svg><span id="visitNumber">Loading…</span></div>
+    </div>
+    <div id="publicPosts" class="postsGrid"><div class="postsEmpty">Loading community posts…</div></div>
+  </section>
+  <section id="settingsTab" class="tabPanel hidden">
+    <div class="sectionHeading"><div><div class="eyebrow">ACCOUNT & SECURITY</div><h2>Settings</h2></div><span class="secureTag">ADMIN ACCESS</span></div>
+    <div class="panel settingsPanel">
+      <div id="adminStatus" class="adminStatus"><span class="statusDot"></span><div><b>Admin is signed out</b><small>Sign in to manage and publish community posts.</small></div></div>
+      <form id="loginForm">
+        <label>Admin password<input id="password" type="password" autocomplete="current-password" required placeholder="Enter admin password"></label>
+        <p class="hint">Only the site owner can access the admin posting tools. Password is checked securely by the server.</p>
+        <button class="primary full" type="submit">Admin Login <span>→</span></button>
+        <p id="loginError" class="error" aria-live="polite"></p>
+      </form>
+      <div id="adminSignedIn" class="hidden">
+        <p class="hint">You are signed in as the site administrator. The Post tab is now available in the menu.</p>
+        <button id="settingsLogoutBtn" class="secondary full" type="button">Log out</button>
+      </div>
+      <p class="hint settingsHelp">Need help with access? <a href="https://www.tiktok.com/@johngalias3" target="_blank" rel="noopener noreferrer">Contact @johngalias3</a>.</p>
+    </div>
+  </section>
+  <section id="adminPostTab" class="tabPanel hidden">
+    <div class="sectionHeading"><div><div class="eyebrow">ADMIN WORKSPACE</div><h2>Publish a post</h2></div><span class="secureTag">ADMIN ONLY</span></div>
+    <div class="dashboardGrid postAdminGrid">
+      <section class="panel">
+        <div class="sectionHead"><div class="stepNo">01</div><div class="sectionTitle"><h3>Post details</h3><p>Upload a cover image and enter the Roblox details.</p></div></div>
+        <label class="drop" for="postImage"><div class="uploadIcon">↑</div><b>Choose post image</b><span>PNG, JPG, WEBP or GIF · up to 8 MB</span><input id="postImage" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></label>
+        <div id="postImageInfo" class="fileInfo hidden"></div>
+        <label>Post name<input id="postName" maxlength="100" placeholder="Enter post name"></label>
+        <label>Roblox ID<input id="postRobloxId" inputmode="numeric" maxlength="25" placeholder="Enter Roblox ID"></label>
+        <button id="publishPostBtn" class="primary full" type="button">Publish Post <span>→</span></button>
+        <p id="postMessage" class="message" aria-live="polite"></p>
+      </section>
+      <section class="panel postManagePanel">
+        <div class="sectionHead"><div class="stepNo">02</div><div class="sectionTitle"><h3>Manage posts</h3><p>Only admin can delete published posts.</p></div></div>
+        <div id="adminPosts" class="adminPostsList"><div class="postsEmpty">Loading posts…</div></div>
+      </section>
+    </div>
+  </section>
+  <section id="placeTab" class="tabPanel hidden">
     <div class="stats">
       <div class="stat"><div class="statIcon">⌁</div><div><small>DESTINATION PLACE</small><b id="placeStat">Not set</b></div></div>
       <div class="stat"><div class="statIcon">◷</div><div><small>PUBLISHING STATUS</small><b id="statusStat">Ready</b></div></div>
