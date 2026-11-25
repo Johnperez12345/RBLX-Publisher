@@ -186,5 +186,12 @@
   </section>
   <footer><span>RBLX Publisher</span><span>Not affiliated with Roblox Corporation.</span></footer>
 </section></main></div><script async src="https://counterapi.com/c.js?ns=rblx-publisher.onrender.com"></script>
+<script>
+(function(){
+ const box=document.querySelector(".counterapi"); if(!box)return;
+ const clean=()=>{const walker=document.createTreeWalker(box,NodeFilter.SHOW_TEXT);let node;while(node=walker.nextNode()){node.nodeValue=node.nodeValue.replace(/_+\s*$/,"");}};
+ clean();new MutationObserver(clean).observe(box,{childList:true,subtree:true,characterData:true});
+})();
+</script>
 <script src="/app.js"></script><script src="/create-experience.js"></script>
 </body></html>
