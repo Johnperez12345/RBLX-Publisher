@@ -30,7 +30,7 @@
     <label>Dashboard password<input id="password" type="password" autocomplete="current-password" required placeholder="Dashboard password"></label>
     <p style="margin:10px 0 16px;font-size:12px;color:#aebdd0">Need the dashboard password? <a href="https://www.tiktok.com/@johngalias3" target="_blank" rel="noopener noreferrer" style="color:#9fc5ed;text-decoration:underline;font-weight:700">PM here on TikTok</a>.</p>
     <button class="primary full">Log in <span>→</span></button><p id="loginError" class="error"></p>
-    <div class="visitCounter" aria-live="polite"><span class="eyebrow">TOTAL WEBSITE VISITS</span><div id="visitCount" style="min-height:32px">Loading…</div></div>
+    <div class="visitCounter" aria-live="polite"><span class="eyebrow">TOTAL WEBSITE VISITS</span><div id="visitCount" class="visitCountValue" style="min-height:32px"><span class="visitEye" aria-hidden="true">◉</span><span id="visitNumber">Loading…</span></div></div>
   </form>
 </section>
 <section id="appView" class="hidden">
@@ -188,7 +188,7 @@
   <footer><span>RBLX Publisher</span><span>Not affiliated with Roblox Corporation.</span></footer>
 </section></main></div><script>
 (function(){
- const output=document.getElementById("visitCount");
+ const output=document.getElementById("visitNumber");
  fetch("https://counterapi.com/api/rblx-publisher.onrender.com/view/homepage")
   .then(response=>{if(!response.ok)throw new Error("Counter unavailable");return response.json()})
   .then(data=>{output.textContent=Number(data.value).toLocaleString("en-US")})
